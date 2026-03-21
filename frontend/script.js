@@ -29,6 +29,14 @@ const THEMES = {
   }
 };
 
+let cartoonImageUrl = "";
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("photo").addEventListener("change", () => {
+    cartoonImageUrl = "";
+  });
+});
+
 function generateInvitation() {
   const theme = document.getElementById("theme").value;
   const config = THEMES[theme] || THEMES.princess;
@@ -63,14 +71,21 @@ function generateInvitation() {
     </div>
   `;
 
-  if (file) {
+
+  if (cartoonImageUrl) {
+    imageHTML = `
+      <div class="photo-frame">
+        <img src="${cartoonImageUrl}" alt="Cartoonized photo" />
+      </div>
+    `;
+  } else if (file) {
     const url = URL.createObjectURL(file);
     imageHTML = `
       <div class="photo-frame">
         <img src="${url}" alt="Uploaded photo" />
       </div>
-    `;
-  }
+  `;
+} 
 
   const output = `
     <div id="invitationCard" style="background: ${config.backgroundStyle};">
@@ -112,3 +127,49 @@ function generateInvitation() {
         link.click();
       });
     }
+
+window.cartoonifyPhoto = async function () {  
+  const file = document.getElementById("photo").files[0];
+  const theme = document.getElementById("theme").value;
+
+  if (!file) {
+    alert("Please choose a photo first.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("photo", file);
+  formData.append("theme", theme);
+
+  document.getElementById("cartoonPreview").innerHTML = "<p>Cartoonifying...</p>";
+
+  try {
+    const response = await fetch("http://localhost:3000/cartoonify", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Cartoonify failed.");
+    }
+
+    if (!data.imageBase64) {
+      throw new Error("No cartoon image returned.");
+    }
+
+    cartoonImageUrl = `data:${data.mimeType || "image/png"};base64,${data.imageBase64}`;
+
+    document.getElementById("cartoonPreview").innerHTML = `
+      <img src="${cartoonImageUrl}" alt="Cartoon preview" style="max-width:280px; border-radius:20px;" />
+    `;
+
+    // 👇 AUTO-UPDATE INVITATION
+    generateInvitation();
+
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+}
