@@ -17,4 +17,4 @@ Built as a real-world tool for my daughter's birthday — focused on creating so
 ## Status
 🚧 V1 in progress — prioritizing simplicity and completion
 
----
+
