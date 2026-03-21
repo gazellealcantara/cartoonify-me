@@ -47,6 +47,7 @@ CRITICAL STYLE:
 THEME:
 - ${themeStyle}
 - magical birthday invitation aesthetic
+- softly blurred whimsical background to focus on subject
 
 IDENTITY (VERY IMPORTANT):
 - prioritize realism of facial proportions while keeping cartoon style
@@ -55,6 +56,7 @@ IDENTITY (VERY IMPORTANT):
 - preserve hairstyle
 - preserve pose and framing
 - do NOT replace with a generic character
+- soft magical glow around subject
 
 AVOID:
 - photorealism
