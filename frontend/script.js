@@ -1,85 +1,91 @@
-function generateInvitation() {
-  const theme = document.getElementById("theme").value;
-  const name = document.getElementById("name").value || "Princess";
-  const date = document.getElementById("date").value || "June 18";
-  const time = document.getElementById("time").value || "5:00 PM";
-  const rsvp = document.getElementById("rsvp").value || "Mom";
-  const file = document.getElementById("photo").files[0];
+    function generateInvitation() {
+      const theme = document.getElementById("theme").value;
+      const date = document.getElementById("date").value || "June 18";
+      const time = document.getElementById("time").value || "5:00 PM";
+      const rsvp = document.getElementById("rsvp").value || "Mom";
+      const file = document.getElementById("photo").files[0];
+      const name = document.getElementById("name").value || "Princess";
+      const displayName = name.charAt(0).toUpperCase() + name.slice(1);
 
-  let backgroundStyle = "";
-  let title = "";
-  let subtitle = "";
-  let emojis = "";
-  let footerNote = "";
-  let accentColor = "";
+      let backgroundStyle = "";
+      let title = "";
+      let subtitle = "";
+      let emojis = "";
+      let footerNote = "";
+      let accentColor = "";
 
-  if (theme === "princess") {
-    backgroundStyle = "linear-gradient(to bottom, #f7ecff, #ffeef6)";
-    title = "A Princess Birthday";
-    subtitle = "You are invited to a royal celebration";
-    emojis = "✨ 🏰 ✨ 👑 ✨ 🏰 ✨";
-    footerNote = "Bibbidi bobbidi birthday ✨";
-    accentColor = "#d06aa2";
-  } else if (theme === "candy") {
-    backgroundStyle = "linear-gradient(to bottom, #fff0f5, #ffe4e1)";
-    title = "A Sweet Celebration";
-    subtitle = "Join us for a candy-filled party";
-    emojis = "🍭 🍬 🍩 🍭 🍬";
-    footerNote = "Sweet treats and birthday magic 🍭";
-    accentColor = "#ff6fa8";
-  }
+      if (theme === "princess") {
+        backgroundStyle = "linear-gradient(to bottom, #f7ecff, #ffeef6)";
+        title = "A Princess Birthday";
+        subtitle = "You are invited to a royal celebration";
+        emojis = "✨ 🏰 ✨ 👑 ✨ 🏰 ✨";
+        footerNote = "Bibbidi bobbidi birthday ✨";
+        accentColor = "#d06aa2";
+      } else if (theme === "candy") {
+        backgroundStyle = "linear-gradient(to bottom, #fff0f5, #ffe4e1)";
+        title = "A Sweet Celebration";
+        subtitle = "Join us for a candy-filled party";
+        emojis = "🍭 🍬 🍩 🍭 🍬";
+        footerNote = "Sweet treats and birthday magic 🍭";
+        accentColor = "#ff4fa3";
+      }
 
-  let imageHTML = `
-    <div class="photo-frame">
-      <div style="
-        width:100%;
-        height:100%;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        border-radius:999px;
-        background:${backgroundStyle};
-        font-size:22px;
-        color:#a78bc9;
-        text-align:center;
-        padding:20px;
-        box-sizing:border-box;
-      ">
-        📷<br />Your photo here
-      </div>
-    </div>
-  `;
+      document.querySelector(".subtitle").innerText =
+        theme === "candy"
+          ? "Candyland party magic 🍭"
+          : "Princess invitation magic ✨";
 
-  if (file) {
-    const url = URL.createObjectURL(file);
-    imageHTML = `
-      <div class="photo-frame">
-        <img src="${url}" alt="Uploaded photo" />
-      </div>
-    `;
-  }
+      let imageHTML = `
+        <div class="photo-frame">
+          <div style="
+            width:100%;
+            height:100%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-radius:999px;
+            background:${backgroundStyle};
+            font-size:22px;
+            color:#a78bc9;
+            text-align:center;
+            padding:20px;
+            box-sizing:border-box;
+          ">
+            📷<br />Your photo here
+          </div>
+        </div>
+      `;
 
-  const output = `
-    <div id="invitationCard" style="background: ${backgroundStyle};">
-      <div class="castle">${emojis}</div>
-      <div class="invite-top">${subtitle}</div>
-      <div class="invite-title">${title}</div>
-      <div class="invite-name" style="color: ${accentColor};">${name}</div>
+      if (file) {
+        const url = URL.createObjectURL(file);
+        imageHTML = `
+          <div class="photo-frame">
+            <img src="${url}" alt="Uploaded photo" />
+          </div>
+        `;
+      }
 
-      ${imageHTML}
+      const output = `
+        <div id="invitationCard" style="background: ${backgroundStyle};">
+          <div class="castle">${emojis}</div>
+          <div class="invite-top">${subtitle}</div>
+          <div class="invite-title">${title}</div>
+          <div class="invite-name" style="color: ${accentColor};">${displayName}</div>
 
-      <div class="details">
-        <div class="detail-line">📅 <strong>${date}</strong></div>
-        <div class="detail-line">⏰ <strong>${time}</strong></div>
-        <div class="detail-line">💌 RSVP: <strong>${rsvp}</strong></div>
-      </div>
+          ${imageHTML}
 
-      <div class="footer-note">${footerNote}</div>
-    </div>
-  `;
+          <div class="details">
+            <div class="detail-line">📅 <strong>${date}</strong></div>
+            <div class="detail-line">⏰ <strong>${time}</strong></div>
+            <div class="detail-line">💌 RSVP: <strong>${rsvp}</strong></div>
+          </div>
 
-  document.getElementById("output").innerHTML = output;
-}
+          <div class="footer-note">${footerNote}</div>
+        </div>
+  `    ;
+
+      document.getElementById("output").innerHTML = output;
+    }
     
     function downloadInvitation() {
       const card = document.getElementById("invitationCard");
