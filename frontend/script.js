@@ -1,31 +1,78 @@
 const THEMES = {
   princess: {
-    backgroundStyle: "linear-gradient(to bottom, #f7ecff, #ffeef6)",
     title: "A Princess Birthday",
-    subtitle: "You are invited to a royal celebration",
-    emojis: "✨ 🏰 ✨ 👑 ✨ 🏰 ✨",
+    subtitle: "YOU ARE INVITED TO A ROYAL CELEBRATION",
     footerNote: "Bibbidi bobbidi birthday ✨",
-    accentColor: "#d06aa2",
-    pageSubtitle: "Princess invitation magic ✨"
+    emojis: "✨ 🏰 ✨ 👑 ✨ 🏰 ✨",
+    pageSubtitle: "Princess invitation magic ✨",
+    titleColor: "#f3c98b",
+    subtitleColor: "#f3f4f6",
+    nameColor: "#ffffff",
+    footerColor: "#fde68a",
+    overlay: "linear-gradient(to bottom, rgba(0,0,0,0.28), rgba(0,0,0,0.10))",
+    detailsBg: "rgba(255,255,255,0.90)",
+    detailsText: "#5b3f99"
   },
 
   candy: {
-    backgroundStyle: "linear-gradient(to bottom, #fff0f5, #ffe4e1)",
     title: "A Sweet Celebration",
-    subtitle: "Join us for a candy-filled party",
+    subtitle: "JOIN US FOR A CANDY-FILLED PARTY",
+    footerNote: "Sweet treats and birthday magic 🎁",
     emojis: "🍭 🍬 🍩 🍭 🍬",
-    footerNote: "Sweet treats and birthday magic 🍭",
-    accentColor: "#ff4fa3",
-    pageSubtitle: "Candyland party magic 🍭"
+    pageSubtitle: "Candyland party magic 🍭",
+    titleColor: "#6b4ca3",
+    subtitleColor: "#0f5e9c",
+    nameColor: "#ff4fa3",
+    footerColor: "#6b4ca3",
+    overlay: "linear-gradient(to bottom, rgba(255,255,255,0.18), rgba(255,255,255,0.08))",
+    detailsBg: "rgba(255,255,255,0.88)",
+    detailsText: "#5b3f99"
   },
+
   superhero: {
-    backgroundStyle: "linear-gradient(to bottom, #e0f2ff, #ffe8e8)",
     title: "A Hero Birthday",
-    subtitle: "Suit up for an epic celebration",
-    emojis: "🦸 ⭐ ⚡ 🦸 ⭐",
+    subtitle: "SUIT UP FOR AN EPIC CELEBRATION",
     footerNote: "Hero time starts now ⚡",
-    accentColor: "#3b82f6",
-    pageSubtitle: "Superhero party power ⚡"
+    emojis: "🦸 ⭐ ⚡ 🦸 ⭐",
+    pageSubtitle: "Superhero party power ⚡",
+    titleColor: "#facc15",
+    subtitleColor: "#ffffff",
+    nameColor: "#ef4444",
+    footerColor: "#fef08a",
+    overlay: "linear-gradient(to bottom, rgba(0,0,0,0.20), rgba(0,0,0,0.05))",
+    detailsBg: "rgba(255,255,255,0.92)",
+    detailsText: "#5b3f99"
+  },
+
+  fairyland: {
+    title: "A Fairy Birthday",
+    subtitle: "YOU ARE INVITED TO A MAGICAL CELEBRATION",
+    textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+    footerNote: "Whimsy, wonder, and birthday magic ✨",
+    emojis: "✨ 🧚 ✨ 🌸 ✨ 🧚 ✨",
+    pageSubtitle: "Fairyland birthday magic 🧚",
+    titleColor: "#fef3c7",
+    subtitleColor: "#e5e7eb",
+    nameColor: "#ffffff",
+    footerColor: "#fde68a",
+    overlay: "linear-gradient(to bottom, rgba(0,0,0,0.32), rgba(0,0,0,0.18))",
+    detailsBg: "rgba(255,255,255,0.94)",
+    detailsText: "#5b3f99"
+  },
+
+  roblox: {
+    title: "A Block Party",
+    subtitle: "JOIN US FOR A PLAYFUL CELEBRATION",
+    footerNote: "Build, play, and celebrate 🎁",
+    emojis: "🧱 ⭐ 🎮 ⭐ 🧱",
+    pageSubtitle: "Roblox-style party fun 🎮",
+    titleColor: "#111827",
+    subtitleColor: "#6b7280",
+    nameColor: "#2563eb",
+    footerColor: "#f59e0b",
+    overlay: "linear-gradient(to bottom, rgba(255,255,255,0.08), rgba(255,255,255,0.03))",
+    detailsBg: "rgba(255,255,255,0.92)",
+    detailsText: "#5b3f99"
   }
 };
 
@@ -42,72 +89,200 @@ function generateInvitation() {
   const config = THEMES[theme] || THEMES.princess;
 
   const date = document.getElementById("date").value || "June 18";
-  const time = document.getElementById("time").value || "5:00 PM";
+  const time = document.getElementById("time").value || "17:00";
   const rsvp = document.getElementById("rsvp").value || "Mom";
   const file = document.getElementById("photo").files[0];
   const name = document.getElementById("name").value || "Princess";
   const displayName = name.charAt(0).toUpperCase() + name.slice(1);
 
-  document.querySelector(".subtitle").innerText = config.pageSubtitle;
+  document.querySelector(".subtitle").innerText = config.pageSubtitle || "";
 
-  let imageHTML = `
-    <div class="photo-frame">
-      <div style="
-        width:100%;
-        height:100%;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        border-radius:999px;
-        background:${config.backgroundStyle};
-        font-size:22px;
-        color:#a78bc9;
-        text-align:center;
-        padding:20px;
-        box-sizing:border-box;
-      ">
-        📷<br />Your photo here
-      </div>
-    </div>
-  `;
-
+  let bgImage = "";
+  let characterImage = "";
 
   if (cartoonImageUrl) {
-    imageHTML = `
-      <div class="photo-frame">
-        <img src="${cartoonImageUrl}" alt="Cartoonized photo" />
-      </div>
-    `;
+    bgImage = cartoonImageUrl;
+    characterImage = cartoonImageUrl;
   } else if (file) {
     const url = URL.createObjectURL(file);
-    imageHTML = `
-      <div class="photo-frame">
-        <img src="${url}" alt="Uploaded photo" />
-      </div>
+    bgImage = url;
+    characterImage = url;
+  }
+
+  const cardStyle = `
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    min-height: 1100px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 32px;
+  
+    background-image: ${bgImage ? `${config.overlay}, url('${bgImage}')` : config.overlay};
+    background-size: cover;
+    background-position: center 20%;
+    background-repeat: no-repeat;
+  
+    box-shadow: 0 18px 50px rgba(0,0,0,0.12);
+    padding: 48px 28px 34px;
+    box-sizing: border-box;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
   `;
-} 
+
+  const subtitleStyle = `
+    text-align: center;
+    color: ${config.subtitleColor};
+    text-shadow: ${config.textShadow || "none"};
+    font-size: 12px;
+    letter-spacing: 2px;
+  `;
+
+  const titleStyle = `
+    text-align: center;
+    color: ${config.titleColor};
+    text-shadow: ${config.textShadow || "none"};
+    font-size: 36px;
+    font-weight: 700;
+  
+    margin-top: 8px;
+    margin-bottom: 8px;
+  `;
+
+  const nameStyle = `
+    text-align: center;
+    color: ${config.nameColor};
+    text-shadow: ${config.textShadow || "0 2px 6px rgba(0,0,0,0.6)"};
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 4px;
+  `;
+
+  const characterStyle = `
+    margin-top: 34px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  `;
+
+  const characterImgStyle = `
+    max-width: 78%;
+    max-height: 520px;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 10px 28px rgba(0,0,0,0.14));
+  `;
+
+  const placeholderStyle = `
+    width: 78%;
+    max-width: 520px;
+    min-height: 420px;
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    background: rgba(255,255,255,0.18);
+    border: 2px dashed rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.9);
+    font-size: 24px;
+    font-weight: 600;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    backdrop-filter: blur(4px);
+  `;
+
+  const detailsStyle = `
+    position: absolute;
+    left: 50%;
+    bottom: 32px;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 640px;
+  
+    border-radius: 32px;
+    background: ${config.detailsBg};
+    color: ${config.detailsText};
+  
+    box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+    padding: 24px;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.88);
+  
+    text-align: center;
+  `;
+
+  const footerStyle = `
+    position: absolute;
+    bottom: 36px;
+    width: 100%;
+    text-align: center;
+    color: ${config.footerColor};
+    font-style: italic;
+    font-size: 16px;
+    opacity: 0.95;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  `;
+
+  const detailsLineStyle = `
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.9;
+  `;
+
+  const characterHTML = "";
 
   const output = `
-    <div id="invitationCard" style="background: ${config.backgroundStyle};">
-      <div class="castle">${config.emojis}</div>
-      <div class="invite-top">${config.subtitle}</div>
-      <div class="invite-title">${config.title}</div>
-      <div class="invite-name" style="color: ${config.accentColor};">${displayName}</div>
+  <div id="invitationCard" style="
+    ${cardStyle};
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 160px;
+  ">
 
-      ${imageHTML}
-
-      <div class="details">
-        <div class="detail-line">📅 <strong>${date}</strong></div>
-        <div class="detail-line">⏰ <strong>${time}</strong></div>
-        <div class="detail-line">💌 RSVP: <strong>${rsvp}</strong></div>
-      </div>
-
-      <div class="footer-note">${config.footerNote}</div>
+    <div style="
+      font-size:38px;
+      line-height:1;
+      text-align:center;
+      margin-bottom: 8px;
+    ">
+      ${config.emojis}
     </div>
-  `;
+
+    <div style="${subtitleStyle}">
+      ${config.subtitle}
+    </div>
+
+    <div style="${titleStyle}">
+      ${config.title}
+    </div>
+
+    <div style="${nameStyle}">
+      ${displayName}
+    </div>
+
+    <!-- DETAILS (anchored bottom) -->
+    <div style="${detailsStyle}">
+      <div style="${detailsLineStyle}">📅 ${date}</div>
+      <div style="${detailsLineStyle}">⏰ ${time}</div>
+      <div style="${detailsLineStyle}">💌 RSVP: ${rsvp}</div>
+    </div>
+
+    <!-- FOOTER (anchored bottom-most) -->
+    <div style="${footerStyle}">
+      ${config.footerNote}
+    </div>
+
+  </div>
+`;
 
   document.getElementById("output").innerHTML = output;
-}   
+}
  
     function downloadInvitation() {
       const card = document.getElementById("invitationCard");
