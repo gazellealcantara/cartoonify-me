@@ -38,17 +38,33 @@ const THEMES = {
 
   superhero: {
     title: "A Hero Birthday",
-    subtitle: "SUIT UP FOR AN EPIC CELEBRATION",
+    subtitle: "GET READY FOR A HEROIC CELEBRATION",
     footerNote: "Hero time starts now ⚡",
     emojis: "🦸 ⭐ ⚡ 🦸 ⭐",
     pageSubtitle: "Superhero party power ⚡",
     titleColor: "#facc15",
     subtitleColor: "#ffffff",
-    nameColor: "#ef4444",
+    nameColor: "#ffffff",
     footerColor: "#fef08a",
     overlay: "linear-gradient(to bottom, rgba(0,0,0,0.20), rgba(0,0,0,0.05))",
     detailsBg: "rgba(255,255,255,0.92)",
     detailsText: "#5b3f99"
+  },
+
+  actionhero: {
+    title: "A Superhero Birthday",
+    subtitle: "GET READY FOR A HEROIC CELEBRATION",
+    footerNote: "Adventure is calling ⚡",
+    emojis: "⚡ 💥 🦸 💥 ⚡",
+
+    titleColor: "#facc15", // brighter yellow
+    subtitleColor: "#e5e7eb",
+    nameColor: "#ffffff",
+    footerColor: "#facc15",
+
+    overlay: "linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.3))",
+    detailsBg: "rgba(255,255,255,0.92)",
+    detailsText: "#1f2937"
   },
 
   fairyland: {
@@ -131,7 +147,7 @@ function generateInvitation() {
     background-repeat: no-repeat;
   
     box-shadow: 0 18px 50px rgba(0,0,0,0.12);
-    padding: 48px 28px 34px;
+    padding: 64px 28px 34px;
     box-sizing: border-box;
   
     display: flex;
