@@ -2,15 +2,22 @@ const THEMES = {
   princess: {
     title: "A Princess Birthday",
     subtitle: "YOU ARE INVITED TO A ROYAL CELEBRATION",
+    textShadow: "0 2px 6px rgba(0,0,0,0.6)",
     footerNote: "Bibbidi bobbidi birthday ✨",
     emojis: "✨ 🏰 ✨ 👑 ✨ 🏰 ✨",
-    pageSubtitle: "Princess invitation magic ✨",
-    titleColor: "#f3c98b",
-    subtitleColor: "#f3f4f6",
+    pageSubtitle: "Princess invitation magic 👑",
+
+    // 🎨 COLORS (tuned)
+    titleColor: "#fde68a",        // warm royal gold
+    subtitleColor: "#e5e7eb",
     nameColor: "#ffffff",
-    footerColor: "#fde68a",
-    overlay: "linear-gradient(to bottom, rgba(0,0,0,0.28), rgba(0,0,0,0.10))",
-    detailsBg: "rgba(255,255,255,0.90)",
+    footerColor: "#e7cfa3",
+
+    // 🌌 OVERLAY (key change)
+    overlay: "linear-gradient(to bottom, rgba(30,58,138,0.35), rgba(88,28,135,0.20))",
+
+    // 📦 DETAILS CARD
+    detailsBg: "rgba(255,255,255,0.94)",
     detailsText: "#5b3f99"
   },
 
@@ -219,14 +226,14 @@ function generateInvitation() {
 
   const footerStyle = `
     position: absolute;
-    bottom: 36px;
+    bottom: 12px;
     width: 100%;
     text-align: center;
     color: ${config.footerColor};
     font-style: italic;
-    font-size: 16px;
-    opacity: 0.95;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    font-size: 14px;
+    opacity: 0.85;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
   `;
 
   const detailsLineStyle = `
