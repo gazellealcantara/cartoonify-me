@@ -6,17 +6,11 @@ const THEMES = {
     footerNote: "Bibbidi bobbidi birthday ✨",
     emojis: "✨ 🏰 ✨ 👑 ✨ 🏰 ✨",
     pageSubtitle: "Princess invitation magic 👑",
-
-    // 🎨 COLORS (tuned)
-    titleColor: "#fde68a",        // warm royal gold
+    titleColor: "#fde68a",
     subtitleColor: "#e5e7eb",
     nameColor: "#ffffff",
     footerColor: "#e7cfa3",
-
-    // 🌌 OVERLAY (key change)
     overlay: "linear-gradient(to bottom, rgba(30,58,138,0.35), rgba(88,28,135,0.20))",
-
-    // 📦 DETAILS CARD
     detailsBg: "rgba(255,255,255,0.94)",
     detailsText: "#5b3f99"
   },
@@ -46,7 +40,15 @@ const THEMES = {
     subtitleColor: "#ffffff",
     nameColor: "#ffffff",
     footerColor: "#fef08a",
-    overlay: "linear-gradient(to bottom, rgba(0,0,0,0.20), rgba(0,0,0,0.05))",
+    overlay: `
+linear-gradient(to bottom,
+  rgba(0,0,0,0.65) 0%,
+  rgba(0,0,0,0.35) 25%,
+  rgba(0,0,0,0.15) 50%,
+  rgba(0,0,0,0.05) 75%,
+  rgba(0,0,0,0) 100%
+)
+`,
     detailsBg: "rgba(255,255,255,0.92)",
     detailsText: "#5b3f99"
   },
@@ -56,12 +58,10 @@ const THEMES = {
     subtitle: "GET READY FOR A HEROIC CELEBRATION",
     footerNote: "Adventure is calling ⚡",
     emojis: "⚡ 💥 🦸 💥 ⚡",
-
-    titleColor: "#facc15", // brighter yellow
+    titleColor: "#facc15",
     subtitleColor: "#e5e7eb",
     nameColor: "#ffffff",
     footerColor: "#facc15",
-
     overlay: "linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.3))",
     detailsBg: "rgba(255,255,255,0.92)",
     detailsText: "#1f2937"
@@ -102,9 +102,12 @@ const THEMES = {
 let cartoonImageUrl = "";
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("photo").addEventListener("change", () => {
-    cartoonImageUrl = "";
-  });
+  const photoInput = document.getElementById("photo");
+  if (photoInput) {
+    photoInput.addEventListener("change", () => {
+      cartoonImageUrl = "";
+    });
+  }
 });
 
 function generateInvitation() {
@@ -118,18 +121,17 @@ function generateInvitation() {
   const name = document.getElementById("name").value || "Princess";
   const displayName = name.charAt(0).toUpperCase() + name.slice(1);
 
-  document.querySelector(".subtitle").innerText = config.pageSubtitle || "";
+  const subtitleEl = document.querySelector(".subtitle");
+  if (subtitleEl) {
+    subtitleEl.innerText = config.pageSubtitle || "";
+  }
 
   let bgImage = "";
-  let characterImage = "";
 
   if (cartoonImageUrl) {
     bgImage = cartoonImageUrl;
-    characterImage = cartoonImageUrl;
   } else if (file) {
-    const url = URL.createObjectURL(file);
-    bgImage = url;
-    characterImage = url;
+    bgImage = URL.createObjectURL(file);
   }
 
   const cardStyle = `
@@ -140,21 +142,41 @@ function generateInvitation() {
     margin: 0 auto;
     overflow: hidden;
     border-radius: 32px;
-  
+
     background-image: ${bgImage ? `${config.overlay}, url('${bgImage}')` : config.overlay};
     background-size: cover;
-    background-position: center 20%;
+    background-position: center center;
     background-repeat: no-repeat;
-  
+    background-blend-mode: multiply;
+
     box-shadow: 0 18px 50px rgba(0,0,0,0.12);
-    padding: 64px 28px 34px;
+    padding: 72px 28px 160px;
     box-sizing: border-box;
-  
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     text-align: center;
+  `;
+
+  const headerStyle = `
+    width: calc(100% - 48px);
+    max-width: 620px;
+    margin: 0 auto 24px;
+    padding: 18px 20px 20px;
+    border-radius: 24px;
+    background: ${
+      theme === "superhero"
+          ? "linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.18))"
+          : theme === "princess"
+              ? "linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0.15))"
+              : theme === "fairyland"
+                  ? "linear-gradient(to bottom, rgba(255,255,255,0.28), rgba(255,255,255,0.10))"
+                  : "linear-gradient(to bottom, rgba(0,0,0,0.30), rgba(0,0,0,0.12))"
+  };
+    backdrop-filter: blur(4px);
+    box-sizing: border-box;
   `;
 
   const subtitleStyle = `
@@ -163,60 +185,26 @@ function generateInvitation() {
     text-shadow: ${config.textShadow || "none"};
     font-size: 12px;
     letter-spacing: 2px;
+    margin-bottom: 10px;
+    opacity: 0.9;
   `;
 
   const titleStyle = `
     text-align: center;
     color: ${config.titleColor};
-    text-shadow: ${config.textShadow || "none"};
+    text-shadow: 0 3px 12px rgba(0,0,0,0.8);
     font-size: 36px;
     font-weight: 700;
-  
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin: 6px 0 14px;
+    line-height: 1.1;
   `;
 
   const nameStyle = `
     text-align: center;
     color: ${config.nameColor};
-    text-shadow: ${config.textShadow || "0 2px 6px rgba(0,0,0,0.6)"};
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
     font-size: 26px;
     font-weight: 700;
-    margin-top: 4px;
-  `;
-
-  const characterStyle = `
-    margin-top: 34px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  `;
-
-  const characterImgStyle = `
-    max-width: 78%;
-    max-height: 520px;
-    object-fit: contain;
-    display: block;
-    filter: drop-shadow(0 10px 28px rgba(0,0,0,0.14));
-  `;
-
-  const placeholderStyle = `
-    width: 78%;
-    max-width: 520px;
-    min-height: 420px;
-    border-radius: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
-    background: rgba(255,255,255,0.18);
-    border: 2px dashed rgba(255,255,255,0.35);
-    color: rgba(255,255,255,0.9);
-    font-size: 24px;
-    font-weight: 600;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.25);
-    backdrop-filter: blur(4px);
   `;
 
   const detailsStyle = `
@@ -226,18 +214,22 @@ function generateInvitation() {
     transform: translateX(-50%);
     width: calc(100% - 40px);
     max-width: 640px;
-  
-    border-radius: 32px;
+
+    border-radius: 28px;
     background: ${config.detailsBg};
     color: ${config.detailsText};
-  
+
     box-shadow: 0 10px 28px rgba(0,0,0,0.10);
-    padding: 24px;
+    padding: 20px;
     box-sizing: border-box;
     backdrop-filter: blur(10px);
-    background: rgba(255,255,255,0.88);
-  
     text-align: center;
+  `;
+
+  const detailsLineStyle = `
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.65;
   `;
 
   const footerStyle = `
@@ -252,81 +244,66 @@ function generateInvitation() {
     text-shadow: 0 1px 4px rgba(0,0,0,0.5);
   `;
 
-  const detailsLineStyle = `
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1.9;
-  `;
-
-  const characterHTML = "";
-
   const output = `
-  <div id="invitationCard" style="
-    ${cardStyle};
-    position: relative;
-    overflow: hidden;
-    padding-bottom: 160px;
-  ">
+    <div id="invitationCard" style="${cardStyle}">
+      <div style="${headerStyle}">
+        <div style="
+          font-size: 38px;
+          line-height: 1;
+          text-align: center;
+          margin-bottom: 12px;
+        ">
+          ${config.emojis}
+        </div>
 
-    <div style="
-      font-size:38px;
-      line-height:1;
-      text-align:center;
-      margin-bottom: 8px;
-    ">
-      ${config.emojis}
+        <div style="${subtitleStyle}">
+          ${config.subtitle}
+        </div>
+
+        <div style="${titleStyle}">
+          ${config.title}
+        </div>
+
+        <div style="${nameStyle}">
+          ${displayName}
+        </div>
+      </div>
+
+      <div style="${detailsStyle}">
+        <div style="${detailsLineStyle}">📅 ${date}</div>
+        <div style="${detailsLineStyle}">⏰ ${time}</div>
+        <div style="${detailsLineStyle}">💌 RSVP: ${rsvp}</div>
+      </div>
+
+      <div style="${footerStyle}">
+        ${config.footerNote}
+      </div>
     </div>
-
-    <div style="${subtitleStyle}">
-      ${config.subtitle}
-    </div>
-
-    <div style="${titleStyle}">
-      ${config.title}
-    </div>
-
-    <div style="${nameStyle}">
-      ${displayName}
-    </div>
-
-    <!-- DETAILS (anchored bottom) -->
-    <div style="${detailsStyle}">
-      <div style="${detailsLineStyle}">📅 ${date}</div>
-      <div style="${detailsLineStyle}">⏰ ${time}</div>
-      <div style="${detailsLineStyle}">💌 RSVP: ${rsvp}</div>
-    </div>
-
-    <!-- FOOTER (anchored bottom-most) -->
-    <div style="${footerStyle}">
-      ${config.footerNote}
-    </div>
-
-  </div>
-`;
+  `;
 
   document.getElementById("output").innerHTML = output;
 }
- 
-    function downloadInvitation() {
-      const card = document.getElementById("invitationCard");
 
-      if (!card) {
-        alert("Please generate the invitation first.");
-        return;
-      }
+function downloadInvitation() {
+  const card = document.getElementById("invitationCard");
 
-      html2canvas(card, {
-        backgroundColor: null,
-        scale: 2
-      }).then(canvas => {
-        const link = document.createElement("a");
-        link.download = "princess-invitation.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-      });
-    }
+  if (!card) {
+    alert("Please generate the invitation first.");
+    return;
+  }
 
-window.cartoonifyPhoto = async function () {  
+  html2canvas(card, {
+    backgroundColor: null,
+    scale: 2
+  }).then((canvas) => {
+    const link = document.createElement("a");
+    link.download = "princess-invitation.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
+}
+
+window.cartoonifyPhoto = async function () {
   const file = document.getElementById("photo").files[0];
   const theme = document.getElementById("theme").value;
 
@@ -347,6 +324,13 @@ window.cartoonifyPhoto = async function () {
       body: formData
     });
 
+    const contentType = response.headers.get("content-type") || "";
+
+    if (!contentType.includes("application/json")) {
+      const text = await response.text();
+      throw new Error(`Backend returned non-JSON response: ${text.slice(0, 120)}`);
+    }
+
     const data = await response.json();
 
     if (!response.ok) {
@@ -363,11 +347,9 @@ window.cartoonifyPhoto = async function () {
       <img src="${cartoonImageUrl}" alt="Cartoon preview" style="max-width:280px; border-radius:20px;" />
     `;
 
-    // 👇 AUTO-UPDATE INVITATION
     generateInvitation();
-
   } catch (err) {
     console.error(err);
     alert(err.message);
   }
-}
+};
