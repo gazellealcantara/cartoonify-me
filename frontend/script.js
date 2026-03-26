@@ -1,3 +1,34 @@
+let cartoonImageUrl = "";
+
+document.addEventListener("DOMContentLoaded", () => {
+  const photoInput = document.getElementById("photo");
+  if (photoInput) {
+    photoInput.addEventListener("change", () => {
+      cartoonImageUrl = "";
+    });
+  }
+
+  const createBtn = document.getElementById("createBtn");
+  if (createBtn) {
+    createBtn.addEventListener("click", cartoonifyPhoto);
+  }
+
+  const downloadBtn = document.getElementById("downloadInvitationBtn");
+  if (downloadBtn) {
+    downloadBtn.addEventListener("click", downloadInvitation);
+  }
+
+  const downloadCartoonBtn = document.getElementById("downloadCartoonBtn");
+  if (downloadCartoonBtn) {
+    downloadCartoonBtn.addEventListener("click", downloadCartoon);
+  }
+
+  const closeBtn = document.getElementById("closeModal");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeResultModal);
+  }
+});
+
 const THEMES = {
   princess: {
     title: "A Princess Birthday",
@@ -99,16 +130,31 @@ linear-gradient(to bottom,
   }
 };
 
-let cartoonImageUrl = "";
-
-document.addEventListener("DOMContentLoaded", () => {
-  const photoInput = document.getElementById("photo");
-  if (photoInput) {
-    photoInput.addEventListener("change", () => {
-      cartoonImageUrl = "";
-    });
+function openResultModal() {
+  const modal = document.getElementById("resultModal");
+  if (modal) {
+    modal.classList.remove("hidden");
   }
-});
+}
+
+function closeResultModal() {
+  const modal = document.getElementById("resultModal");
+  if (modal) {
+    modal.classList.add("hidden");
+  }
+}
+
+function downloadCartoon() {
+  if (!cartoonImageUrl) {
+    alert("Please create the invitation first.");
+    return;
+  }
+
+  const link = document.createElement("a");
+  link.href = cartoonImageUrl;
+  link.download = "cartoon.png";
+  link.click();
+}
 
 function generateInvitation() {
   const theme = document.getElementById("theme").value;
@@ -117,7 +163,8 @@ function generateInvitation() {
   const date = document.getElementById("date").value || "June 18";
   const time = document.getElementById("time").value || "17:00";
   const rsvp = document.getElementById("rsvp").value || "Mom";
-  const file = document.getElementById("photo").files[0];
+  const photoInput = document.getElementById("photo");
+  const file = photoInput && photoInput.files ? photoInput.files[0] : null;
   const name = document.getElementById("name").value || "Princess";
   const displayName = name.charAt(0).toUpperCase() + name.slice(1);
 
@@ -281,7 +328,12 @@ function generateInvitation() {
     </div>
   `;
 
-  document.getElementById("output").innerHTML = output;
+  const outputEl = document.getElementById("output");
+  if (outputEl) {
+    outputEl.innerHTML = output;
+  }
+
+  openResultModal();
 }
 
 function downloadInvitation() {
@@ -304,19 +356,24 @@ function downloadInvitation() {
 }
 
 window.cartoonifyPhoto = async function () {
-  const file = document.getElementById("photo").files[0];
-  const theme = document.getElementById("theme").value;
+  const photoInput = document.getElementById("photo");
 
-  if (!file) {
+  if (!photoInput || !photoInput.files || !photoInput.files[0]) {
     alert("Please choose a photo first.");
     return;
   }
+
+  const file = photoInput.files[0];
+  const theme = document.getElementById("theme").value;
 
   const formData = new FormData();
   formData.append("photo", file);
   formData.append("theme", theme);
 
-  document.getElementById("cartoonPreview").innerHTML = "<p>Cartoonifying...</p>";
+  const preview = document.getElementById("cartoonPreview");
+  if (preview) {
+    preview.innerHTML = "<p>Creating your cartoon invitation...</p>";
+  }
 
   try {
     const response = await fetch("http://localhost:3000/cartoonify", {
@@ -343,9 +400,17 @@ window.cartoonifyPhoto = async function () {
 
     cartoonImageUrl = `data:${data.mimeType || "image/png"};base64,${data.imageBase64}`;
 
-    document.getElementById("cartoonPreview").innerHTML = `
-      <img src="${cartoonImageUrl}" alt="Cartoon preview" style="max-width:280px; border-radius:20px;" />
-    `;
+    if (preview) {
+      preview.innerHTML = "";
+
+      const img = document.createElement("img");
+      img.src = cartoonImageUrl;
+      img.alt = "Cartoon preview";
+      img.style.maxWidth = "280px";
+      img.style.borderRadius = "20px";
+
+      preview.appendChild(img);
+    }
 
     generateInvitation();
   } catch (err) {

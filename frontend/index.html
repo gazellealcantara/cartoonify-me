@@ -8,31 +8,52 @@
 </head>
 <body>
 
-  <h1>Cartoonify Me 👑</h1>
-  <div class="subtitle">Princess invitation magic ✨</div>
+  <h1>Cartoonify Me ✨</h1>
+  <div class="subtitle">Create personalized kids birthday invitations in seconds</div>
 
   <div class="form-card">
-    <input type="file" id="photo" accept="image/*" /><br />
+    <label for="photo" class="field-label">Upload your child’s photo</label>
+    <input type="file" id="photo" accept="image/*" />
+    <p class="helper-text">
+      For best results, upload a half-body photo (face + upper body)
+    </p>
+
+    <label for="theme" class="field-label">Choose a theme</label>
     <select id="theme">
-      <option value="princess">👑 Princess</option>
-      <option value="candy">🍭 Candyland</option>
-      <option value="superhero">🍭 Super Hero</option>
-      <option value="actionhero">🍭 Action Hero</option>
-      <option value="fairyland">🍭 Fairy Land</option>
-      <option value="roblox">🍭 Roblox</option>
-    </select><br />
+      <option value="princess">Princess</option>
+      <option value="fairyland">Fairyland</option>
+      <option value="superhero">Superhero</option>
+    </select>
 
-    <input type="text" id="name" placeholder="Name" /><br />
-    <input type="text" id="date" placeholder="Date" /><br />
-    <input type="text" id="time" placeholder="Time" /><br />
-    <input type="text" id="rsvp" placeholder="RSVP" /><br />
+    <input id="name" type="text" placeholder="Child’s Name" />
+    <input id="date" type="date" />
+    <input id="time" type="time" />
+    <input id="rsvp" type="text" placeholder="RSVP Details" />
 
-    <button onclick="cartoonifyPhoto()">Cartoonify Photo</button>
+    <button id="createBtn" class="primary-btn">
+      Create Cartoon Invitation
+    </button>
+
     <div id="cartoonPreview"></div>
-    <button onclick="generateInvitation()">Generate Invitation</button>
-    <button onclick="downloadInvitation()">Download Invitation</button>
   </div>
 
-  <div id="output"></div>
+  <div id="resultModal" class="modal hidden">
+    <div class="modal-card">
+
+      <button id="closeModal" class="modal-close">&times;</button>
+
+      <h2>Your invitation is ready</h2>
+
+      <div class="modal-preview">
+        <div id="output"></div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="downloadInvitationBtn">Download Invitation</button>
+        <button id="downloadCartoonBtn">Download Cartoon</button>
+      </div>
+
+    </div>
+  </div>
   <script src="script.js"></script>
 </html>
