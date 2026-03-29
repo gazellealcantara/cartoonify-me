@@ -46,7 +46,7 @@ const THEMES = {
     detailsText: "#5b3f99"
   },
 
-  candy: {
+  candyland: {
     title: "A Sweet Celebration",
     subtitle: "JOIN US FOR A CANDY-FILLED PARTY",
     footerNote: "Sweet treats and birthday magic 🎁",
@@ -208,21 +208,20 @@ function generateInvitation() {
     text-align: center;
   `;
 
+  const GRADIENTS = {
+    superhero: "linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.18))",
+    princess: "linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0.15))",
+    fairyland: "linear-gradient(to bottom, rgba(255,255,255,0.28), rgba(255,255,255,0.10))",
+    candyland: "linear-gradient(to bottom, rgba(255,182,193,0.35), rgba(255,240,245,0.15))"
+  };
+
   const headerStyle = `
     width: calc(100% - 48px);
     max-width: 620px;
     margin: 0 auto 24px;
     padding: 18px 20px 20px;
     border-radius: 24px;
-    background: ${
-      theme === "superhero"
-          ? "linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.18))"
-          : theme === "princess"
-              ? "linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0.15))"
-              : theme === "fairyland"
-                  ? "linear-gradient(to bottom, rgba(255,255,255,0.28), rgba(255,255,255,0.10))"
-                  : "linear-gradient(to bottom, rgba(0,0,0,0.30), rgba(0,0,0,0.12))"
-  };
+    background: ${GRADIENTS[theme] || "linear-gradient(to bottom, rgba(0,0,0,0.30), rgba(0,0,0,0.12))"};
     backdrop-filter: blur(4px);
     box-sizing: border-box;
   `;
