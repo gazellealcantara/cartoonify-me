@@ -162,7 +162,8 @@ function generateInvitation() {
 
   const date = document.getElementById("date").value || "June 18";
   const time = document.getElementById("time").value || "17:00";
-  const rsvp = document.getElementById("rsvp").value || "Mom";
+  const location = document.getElementById("location").value || "Clubhouse";
+  const rsvp = document.getElementById("rsvp").value || "Mom - 9999999999";
   const photoInput = document.getElementById("photo");
   const file = photoInput && photoInput.files ? photoInput.files[0] : null;
   const name = document.getElementById("name").value || "Princess";
@@ -319,6 +320,7 @@ function generateInvitation() {
       <div style="${detailsStyle}">
         <div style="${detailsLineStyle}">📅 ${date}</div>
         <div style="${detailsLineStyle}">⏰ ${time}</div>
+        <div style="${detailsLineStyle}">📍 ${location}</div>
         <div style="${detailsLineStyle}">💌 RSVP: ${rsvp}</div>
       </div>
 
