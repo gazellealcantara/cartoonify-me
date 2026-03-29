@@ -115,19 +115,40 @@ linear-gradient(to bottom,
     detailsText: "#5b3f99"
   },
 
+  minecraft: {
+    title: "A Blocky Adventure",
+    subtitle: "JOIN US FOR A FUN BLOCK PARTY",
+    footerNote: "Build, play, and celebrate 🎁",
+    emojis: "🧱 ⛏️ 🧱",
+    pageSubtitle: "Minecraft-style party fun ⛏️",
+
+    titleColor: "#f9fafb",        // soft white
+    subtitleColor: "#e5e7eb",     // slightly dimmed white
+    nameColor: "#60a5fa",         // bright blue accent
+    footerColor: "#ca8a04",       // warm gold/orange
+
+    textShadow: "0 2px 10px rgba(0,0,0,0.6)",
+
+    overlay: "linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.15))",
+
+    detailsBg: "rgba(255,255,255,0.96)",
+    detailsText: "#1f2937"
+  },
+
   roblox: {
     title: "A Block Party",
     subtitle: "JOIN US FOR A PLAYFUL CELEBRATION",
     footerNote: "Build, play, and celebrate 🎁",
-    emojis: "🧱 ⭐ 🎮 ⭐ 🧱",
+    emojis: "🎮 🧱 🎮",
     pageSubtitle: "Roblox-style party fun 🎮",
     titleColor: "#111827",
-    subtitleColor: "#6b7280",
+    subtitleColor: "#374151",
     nameColor: "#2563eb",
     footerColor: "#f59e0b",
-    overlay: "linear-gradient(to bottom, rgba(255,255,255,0.08), rgba(255,255,255,0.03))",
-    detailsBg: "rgba(255,255,255,0.92)",
-    detailsText: "#5b3f99"
+    textShadow: "0 2px 6px rgba(0,0,0,0.18)",
+    overlay: "linear-gradient(to bottom, rgba(255,255,255,0.22), rgba(255,255,255,0.10))",
+    detailsBg: "rgba(255,255,255,0.96)",
+    detailsText: "#1f2937"
   }
 };
 
@@ -376,7 +397,9 @@ function downloadInvitation() {
     scale: 2
   }).then((canvas) => {
     const link = document.createElement("a");
-    link.download = "princess-invitation.png";
+    const theme = document.getElementById("theme").value || "invitation";
+    const randomString = Math.random().toString(36).substring(2, 8);
+    link.download = `${randomString}-${theme}-invitation.png`;
     link.href = canvas.toDataURL("image/png");
     link.click();
   });
