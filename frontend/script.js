@@ -52,11 +52,12 @@ const THEMES = {
     footerNote: "Sweet treats and birthday magic 🎁",
     emojis: "🍭 🍬 🍩 🍭 🍬",
     pageSubtitle: "Candyland party magic 🍭",
-    titleColor: "#6b4ca3",
-    subtitleColor: "#0f5e9c",
-    nameColor: "#ff4fa3",
+    titleColor: "#ffffff",
+    textShadow: "0 4px 16px rgba(0,0,0,0.85)",
+    subtitleColor: "#ffffff",
+    nameColor: "#ff66b2",
     footerColor: "#6b4ca3",
-    overlay: "linear-gradient(to bottom, rgba(255,255,255,0.18), rgba(255,255,255,0.08))",
+    overlay: "linear-gradient(to bottom, rgba(255,182,193,0.25), rgba(255,240,245,0.12))",
     detailsBg: "rgba(255,255,255,0.88)",
     detailsText: "#5b3f99"
   },
@@ -160,8 +161,33 @@ function generateInvitation() {
   const theme = document.getElementById("theme").value;
   const config = THEMES[theme] || THEMES.princess;
 
-  const date = document.getElementById("date").value || "June 18";
-  const time = document.getElementById("time").value || "17:00";
+  const rawDate = document.getElementById("date").value;
+
+  let formattedDate = "June 1, 2026";
+
+  if (rawDate) {
+    const dateObj = new Date(rawDate);
+
+    formattedDate = dateObj.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    });
+  }
+  const rawTime = document.getElementById("time").value;
+
+  let formattedTime = "5:00 PM";
+
+  if (rawTime) {
+    const [hours, minutes] = rawTime.split(":");
+    const date = new Date();
+    date.setHours(hours, minutes);
+
+    formattedTime = date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit"
+    });
+  }
   const location = document.getElementById("location").value || "Clubhouse";
   const rsvp = document.getElementById("rsvp").value || "Mom - 9999999999";
   const photoInput = document.getElementById("photo");
@@ -212,7 +238,7 @@ function generateInvitation() {
     superhero: "linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.18))",
     princess: "linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0.15))",
     fairyland: "linear-gradient(to bottom, rgba(255,255,255,0.28), rgba(255,255,255,0.10))",
-    candyland: "linear-gradient(to bottom, rgba(255,182,193,0.35), rgba(255,240,245,0.15))"
+    candyland: "linear-gradient(to bottom, rgba(255,182,193,0.45), rgba(255,240,245,0.20))"
   };
 
   const headerStyle = `
@@ -317,8 +343,8 @@ function generateInvitation() {
       </div>
 
       <div style="${detailsStyle}">
-        <div style="${detailsLineStyle}">📅 ${date}</div>
-        <div style="${detailsLineStyle}">⏰ ${time}</div>
+        <div style="${detailsLineStyle}">📅 ${formattedDate}</div>
+        <div style="${detailsLineStyle}">⏰ ${formattedTime}</div>
         <div style="${detailsLineStyle}">📍 ${location}</div>
         <div style="${detailsLineStyle}">💌 RSVP: ${rsvp}</div>
       </div>
