@@ -19,15 +19,39 @@ app.get("/", (req, res) => {
   res.send("Cartoonify backend is running");
 });
 
-// ✨ IMPROVED PROMPT (balanced: style + identity)
 function buildCartoonPrompt(theme = "princess") {
   const themeStyleMap = {
     princess: "storybook princess illustration with magical pastel elegance",
-    candy: "whimsical candyland cartoon with playful pastel colors",
+    fairyland: "whimsical fairy illustration with dreamy magical atmosphere",
+    candyland: "whimsical candyland cartoon with playful pastel colors",
     superhero: "bold comic-style superhero cartoon with vibrant colors"
   };
 
-  const themeStyle = themeStyleMap[theme] || "playful cartoon illustration";
+  const baseStyle =
+      themeStyleMap[theme] || "playful cartoon illustration";
+
+  // 🔥 Only override for Minecraft
+  const minecraftOverride = `
+THEME:
+- minecraft-inspired blocky cartoon style
+- simple square and geometric forms
+- bright playful colors
+- block-world background with grass, sky, cubes
+- fun, clean, game-like aesthetic
+- avoid soft pastel fantasy look
+- avoid magical glow
+- sharper, simpler shapes
+  `.trim();
+
+  const defaultThemeBlock = `
+THEME:
+- ${baseStyle}
+- magical birthday invitation aesthetic
+- softly blurred whimsical background to focus on subject
+  `.trim();
+
+  const themeBlock =
+      theme === "minecraft" ? minecraftOverride : defaultThemeBlock;
 
   return `
 Transform this uploaded photo into a highly stylized 2D cartoon portrait.
@@ -44,10 +68,7 @@ CRITICAL STYLE:
 - polished digital illustration
 - cute, charming, child-friendly style
 
-THEME:
-- ${themeStyle}
-- magical birthday invitation aesthetic
-- softly blurred whimsical background to focus on subject
+${themeBlock}
 
 IDENTITY (VERY IMPORTANT):
 - prioritize realism of facial proportions while keeping cartoon style
@@ -81,11 +102,11 @@ app.post("/cartoonify", upload.single("photo"), async (req, res) => {
     const prompt = buildCartoonPrompt(theme);
 
     const imageFile = await toFile(
-      req.file.buffer,
-      req.file.originalname || "photo.png",
-      {
-        type: req.file.mimetype || "image/png",
-      }
+        req.file.buffer,
+        req.file.originalname || "photo.png",
+        {
+          type: req.file.mimetype || "image/png",
+        }
     );
 
     const result = await openai.images.edit({
@@ -118,6 +139,8 @@ app.post("/cartoonify", upload.single("photo"), async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server running on port ${process.env.PORT || 3000}`);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
