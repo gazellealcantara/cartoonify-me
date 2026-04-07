@@ -163,8 +163,8 @@ function generateInvitation() {
   const theme = document.getElementById("theme").value;
   const config = THEMES[theme] || THEMES.princess;
 
-  console.log("theme:", theme);
-  console.log("config title:", config.title);
+  // console.log("theme:", theme);
+  // console.log("config title:", config.title);
 
   const rawDate = document.getElementById("date").value;
   let formattedDate = "June 1, 2026";
