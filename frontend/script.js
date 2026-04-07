@@ -85,20 +85,6 @@ linear-gradient(to bottom,
     detailsText: "#5b3f99"
   },
 
-  actionhero: {
-    title: "A Superhero Birthday",
-    subtitle: "GET READY FOR A HEROIC CELEBRATION",
-    footerNote: "Adventure is calling ⚡",
-    emojis: "⚡ 💥 🦸 💥 ⚡",
-    titleColor: "#facc15",
-    subtitleColor: "#e5e7eb",
-    nameColor: "#ffffff",
-    footerColor: "#facc15",
-    overlay: "linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.3))",
-    detailsBg: "rgba(255,255,255,0.92)",
-    detailsText: "#1f2937"
-  },
-
   fairyland: {
     title: "A Fairy Birthday",
     subtitle: "YOU ARE INVITED TO A MAGICAL CELEBRATION",
@@ -115,21 +101,27 @@ linear-gradient(to bottom,
     detailsText: "#5b3f99"
   },
 
-  roblox: {
-    title: "A Block Party",
-    subtitle: "JOIN US FOR A PLAYFUL CELEBRATION",
+  minecraft: {
+    title: "A Blocky Adventure",
+    subtitle: "JOIN US FOR A FUN BLOCK PARTY",
     footerNote: "Build, play, and celebrate 🎁",
-    emojis: "🧱 ⭐ 🎮 ⭐ 🧱",
-    pageSubtitle: "Roblox-style party fun 🎮",
-    titleColor: "#111827",
-    subtitleColor: "#6b7280",
-    nameColor: "#2563eb",
-    footerColor: "#f59e0b",
-    overlay: "linear-gradient(to bottom, rgba(255,255,255,0.08), rgba(255,255,255,0.03))",
-    detailsBg: "rgba(255,255,255,0.92)",
-    detailsText: "#5b3f99"
+    emojis: "🧱 ⛏️ 🧱",
+    pageSubtitle: "Minecraft-style party fun ⛏️",
+    titleColor: "#f9fafb",
+    subtitleColor: "#e5e7eb",
+    nameColor: "#60a5fa",
+    footerColor: "#ca8a04",
+    textShadow: "0 2px 10px rgba(0,0,0,0.6)",
+    overlay: "linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.15))",
+    detailsBg: "rgba(255,255,255,0.96)",
+    detailsText: "#1f2937"
   }
 };
+
+function generateFileName(prefix, theme) {
+  const randomString = Math.random().toString(36).substring(2, 8);
+  return `${randomString}-${theme}-${prefix}.png`;
+}
 
 function openResultModal() {
   const modal = document.getElementById("resultModal");
@@ -151,31 +143,42 @@ function downloadCartoon() {
     return;
   }
 
+  const theme = document.getElementById("theme").value || "cartoon";
+
+  const timestamp = Date.now();
+  const random = Math.random().toString(36).substring(2, 6);
+
+  const fileName = `cartoon-${theme}-${timestamp}-${random}.png`;
+
   const link = document.createElement("a");
   link.href = cartoonImageUrl;
-  link.download = "cartoon.png";
+  link.download = fileName;
+
+  document.body.appendChild(link);
   link.click();
+  document.body.removeChild(link);
 }
 
 function generateInvitation() {
   const theme = document.getElementById("theme").value;
   const config = THEMES[theme] || THEMES.princess;
 
-  const rawDate = document.getElementById("date").value;
+  console.log("theme:", theme);
+  console.log("config title:", config.title);
 
+  const rawDate = document.getElementById("date").value;
   let formattedDate = "June 1, 2026";
 
   if (rawDate) {
     const dateObj = new Date(rawDate);
-
     formattedDate = dateObj.toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
       year: "numeric"
     });
   }
-  const rawTime = document.getElementById("time").value;
 
+  const rawTime = document.getElementById("time").value;
   let formattedTime = "5:00 PM";
 
   if (rawTime) {
@@ -188,6 +191,7 @@ function generateInvitation() {
       minute: "2-digit"
     });
   }
+
   const location = document.getElementById("location").value || "Clubhouse";
   const rsvp = document.getElementById("rsvp").value || "Mom - 9999999999";
   const photoInput = document.getElementById("photo");
@@ -376,7 +380,8 @@ function downloadInvitation() {
     scale: 2
   }).then((canvas) => {
     const link = document.createElement("a");
-    link.download = "princess-invitation.png";
+    const theme = document.getElementById("theme").value || "invitation";
+    link.download = generateFileName("invitation", theme);
     link.href = canvas.toDataURL("image/png");
     link.click();
   });
