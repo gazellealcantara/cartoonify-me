@@ -1,20 +1,18 @@
 # Cartoonify Me 🎨
 
-Turn real photos into stylized cartoon characters and generate printable invitations.
+A web application that transforms user photos into stylized cartoon portraits and generates themed invitations.
 
-## V1 Focus
-Birthday Invitation Generator
+## Built with:
+- Node.js backend
+- Image generation pipeline (OpenAI API)
+- Frontend UI for user interaction and download
 
 ## Features
-- Upload photo
-- Cartoon transformation (WIP)
-- Cinderella-themed invitation
-- Export as image (PNG)
+- Multiple themes (Princess, Candyland, Superhero, etc.)
+- Image upload and transformation
+- Invitation generation and download
 
-## Why I built this
-Built as a real-world tool for my daughter's birthday — focused on creating something usable, not just technical.
+This project reflects my interest in building user-facing products and end-to-end systems.
 
-## Status
-🚧 V1 in progress — prioritizing simplicity and completion
 
 
