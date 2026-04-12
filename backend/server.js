@@ -24,7 +24,8 @@ function buildCartoonPrompt(theme = "princess") {
     princess: "storybook princess illustration with magical pastel elegance",
     fairyland: "whimsical fairy illustration with dreamy magical atmosphere",
     candyland: "whimsical candyland cartoon with playful pastel colors",
-    superhero: "bold comic-style superhero cartoon with vibrant colors"
+    superhero: "bold comic-style superhero cartoon with vibrant colors",
+    adventure: "anime-inspired child adventure portrait with a cute fantasy creature companion, glowing magical energy effects, vibrant outdoor landscape, playful and heroic mood"
   };
 
   const baseStyle =
@@ -32,26 +33,60 @@ function buildCartoonPrompt(theme = "princess") {
 
   // 🔥 Only override for Minecraft
   const minecraftOverride = `
-THEME:
-- minecraft-inspired blocky cartoon style
-- simple square and geometric forms
-- bright playful colors
-- block-world background with grass, sky, cubes
-- fun, clean, game-like aesthetic
-- avoid soft pastel fantasy look
-- avoid magical glow
-- sharper, simpler shapes
-  `.trim();
+    THEME:
+    - minecraft-inspired blocky cartoon style
+    - simple square and geometric forms
+    - bright playful colors
+    - block-world background with grass, sky, cubes
+    - fun, clean, game-like aesthetic
+    - avoid soft pastel fantasy look
+    - avoid magical glow
+    - sharper, simpler shapes
+      `.trim();
+
+  const adventureOverride = `
+    THEME:
+    - anime-inspired child adventure style
+    - include a small cute fantasy creature companion
+    - creature should be small, floating, and friendly
+    - consistent soft rounded shape, not complex
+    - creature positioned close to the child’s shoulder or upper body, not above the head
+    - avoid placing the creature near the top edge of the image
+    - avoid placing the creature too close to the edge of the frame
+    - scale of creature should be small but clearly visible
+    - creature should appear as a friendly companion interacting with the child’s space
+    - keep the child as the central focus, with the creature clearly secondary and nearby
+    - glowing magical energy effects around subject
+    - vibrant outdoor setting (grass, sky, hills)
+    - playful, heroic, child-friendly mood
+    - soft but vibrant colors
+    - NOT realistic anime, still cartoon-friendly
+    - avoid copyrighted characters
+    - slightly larger, expressive eyes
+    - keep eyes natural and proportional
+    - avoid oversized anime eyes
+    - maintain childlike facial proportions with soft round cheeks
+    - preserve youthful features appropriate for a young child
+    - avoid making the subject look older or more mature
+    - keep face slightly round and soft, not sharp or angular
+    `.trim(); 
 
   const defaultThemeBlock = `
-THEME:
-- ${baseStyle}
-- magical birthday invitation aesthetic
-- softly blurred whimsical background to focus on subject
-  `.trim();
+    THEME:
+    - ${baseStyle}
+    - magical birthday invitation aesthetic
+    - softly blurred whimsical background to focus on subject
+      `.trim();
 
-  const themeBlock =
-      theme === "minecraft" ? minecraftOverride : defaultThemeBlock;
+  let themeBlock;
+
+  if (theme === "minecraft") {
+    themeBlock = minecraftOverride;
+  } else if (theme === "adventure") {
+    themeBlock = adventureOverride;
+  } else {
+    themeBlock = defaultThemeBlock;
+  }
 
   return `
 Transform this uploaded photo into a highly stylized 2D cartoon portrait.
