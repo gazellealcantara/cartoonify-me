@@ -115,6 +115,21 @@ linear-gradient(to bottom,
     overlay: "linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.15))",
     detailsBg: "rgba(255,255,255,0.96)",
     detailsText: "#1f2937"
+  },
+  adventure: {
+    title: "A Monster Adventure",
+    subtitle: "JOIN US FOR A MAGICAL QUEST",
+    footerNote: "Adventure awaits ✨",
+    emojis: "⚡ 🌟 🐾 ⚡ 🌟",
+    pageSubtitle: "Monster adventure begins 🌟",
+    titleColor: "#fef08a",
+    subtitleColor: "#e5e7eb",
+    nameColor: "#ffffff",
+    footerColor: "#fde68a",
+    textShadow: "0 2px 10px rgba(0,0,0,0.6)",
+    overlay: "linear-gradient(to bottom, rgba(0,0,0,0.40), rgba(0,0,0,0.20))",
+    detailsBg: "rgba(255,255,255,0.94)",
+    detailsText: "#1f2937"
   }
 };
 
@@ -242,7 +257,8 @@ function generateInvitation() {
     superhero: "linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.18))",
     princess: "linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0.15))",
     fairyland: "linear-gradient(to bottom, rgba(255,255,255,0.28), rgba(255,255,255,0.10))",
-    candyland: "linear-gradient(to bottom, rgba(255,182,193,0.45), rgba(255,240,245,0.20))"
+    candyland: "linear-gradient(to bottom, rgba(255,182,193,0.45), rgba(255,240,245,0.20))",
+    adventure: "linear-gradient(to bottom, rgba(34,197,94,0.35), rgba(59,130,246,0.18))"
   };
 
   const headerStyle = `
