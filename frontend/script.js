@@ -1,4 +1,34 @@
+let selectedProducts = [];
 let cartoonImageUrl = "";
+
+function toggleProduct(product) {
+  const el = document.getElementById(product);
+
+  if (selectedProducts.includes(product)) {
+    selectedProducts = selectedProducts.filter(p => p !== product);
+    el.classList.remove("selected");
+  } else {
+    selectedProducts.push(product);
+    el.classList.add("selected");
+  }
+
+  updateNextButton(); // always run
+}
+
+function updateNextButton() {
+  const btn = document.getElementById("nextBtn");
+
+  if (selectedProducts.length > 0) {
+    btn.disabled = false;
+  } else {
+    btn.disabled = true;
+  }
+}
+
+function goToThemeStep() {
+  document.getElementById("productStep").style.display = "none";
+  document.getElementById("themeStep").style.display = "block";
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const photoInput = document.getElementById("photo");

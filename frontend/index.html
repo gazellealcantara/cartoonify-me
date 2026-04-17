@@ -11,6 +11,26 @@
   <h1>Cartoonify Me ✨</h1>
   <div class="subtitle">Create personalized kids birthday invitations in seconds</div>
 
+  <div class="product-grid">
+  <div class="product-card" id="portrait" onclick="toggleProduct('portrait')">
+    PORTRAIT
+  </div>
+
+  <div class="product-card" id="invitation" onclick="toggleProduct('invitation')">
+    INVITATION
+  </div>
+
+  <div class="product-card" id="banner" onclick="toggleProduct('banner')">
+    BANNER
+  </div>
+
+  <div class="product-card" id="thankyou" onclick="toggleProduct('thankyou')">
+    THANK YOU
+  </div>
+</div>
+
+  <button id="nextBtn" onclick="goToThemeStep()" disabled>Next</button>
+
   <div class="form-card">
     <label for="photo" class="field-label">Upload your child’s photo</label>
     <input type="file" id="photo" accept="image/*" />
