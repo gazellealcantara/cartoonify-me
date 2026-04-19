@@ -11,8 +11,8 @@ function toggleProduct(product) {
     selectedProducts.push(product);
     el.classList.add("selected");
   }
+  updateNextButton();
 
-  updateNextButton(); // always run
 }
 
 function updateNextButton() {
