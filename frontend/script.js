@@ -130,6 +130,23 @@ linear-gradient(to bottom,
     overlay: "linear-gradient(to bottom, rgba(0,0,0,0.40), rgba(0,0,0,0.20))",
     detailsBg: "rgba(255,255,255,0.94)",
     detailsText: "#1f2937"
+  },
+  classic: {
+    backgroundStyle: "linear-gradient(to bottom, #f8f8f8, #ffffff)",
+    title: "Classic Portrait",
+    subtitle: "Clean, natural, and timeless",
+    // ADD THESE 👇
+    pageSubtitle: "Natural portrait style ✨",
+    footerNote: "",
+    emojis: "",
+    titleColor: "#374151",
+    subtitleColor: "#6b7280",
+    nameColor: "#111827",
+    footerColor: "#6b7280",
+    overlay: "none",
+    detailsBg: "rgba(255,255,255,0.95)",
+    detailsText: "#374151",
+    textShadow: "none"
   }
 };
 

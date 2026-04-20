@@ -25,7 +25,17 @@ function buildCartoonPrompt(theme = "princess") {
     fairyland: "whimsical fairy illustration with dreamy magical atmosphere",
     candyland: "whimsical candyland cartoon with playful pastel colors",
     superhero: "bold comic-style superhero cartoon with vibrant colors",
-    adventure: "anime-inspired child adventure portrait with a cute fantasy creature companion, glowing magical energy effects, vibrant outdoor landscape, playful and heroic mood"
+    adventure: "anime-inspired child adventure portrait with a cute fantasy creature companion, glowing magical energy effects, vibrant outdoor landscape, playful and heroic mood",
+    classic: `
+      soft illustrated portrait based on the original photo,
+      preserve facial features and likeness,
+      maintain natural proportions,
+      keep original background recognizable,
+      soft lighting and gentle warmth,
+      clean and polished look,
+      no heavy fantasy elements,
+      subtle stylization, not exaggerated
+    `
   };
 
   const baseStyle =
