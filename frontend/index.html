@@ -9,97 +9,114 @@
 <body>
 
   <h1>Cartoonify Me ✨</h1>
-  <div class="subtitle">Create personalized kids birthday invitations in seconds</div>
 
-  <div class="product-grid">
-    <div class="product-card" onclick="toggleProduct('portrait')" id="portrait">
+  <button onclick="openModal()">Start</button>
 
-    <img src="icons/portrait.png" class="icon" />
+  <div id="flowModal" class="modal hidden">
+    <div class="modal-content">
+      <div id="step1" class="step">
+        <!-- product grid -->
+          <div class="product-grid">
+            <div class="product-card" onclick="toggleProduct('portrait')" id="portrait">
+            <img src="icons/portrait.png" class="icon" />
+            <span>Portrait</span>
+          </div>
+          <div class="product-card" onclick="toggleProduct('invitation')" id="invitation">
+            <img src="icons/invitation.png" class="icon" />
+            <span>Invitation</span>
+          </div>
+          <div class="product-card" onclick="toggleProduct('banner')" id="banner">
+            <img src="icons/banner.png" class="icon" />
+            <span>Banner</span>
+          </div>
+          <div class="product-card" onclick="toggleProduct('thankyou')" id="thankyou">
+            <img src="icons/thankyou.png" class="icon" />
+            <span>Thank you card</span>
+          </div>
+        </div>
 
-    <span>Portrait</span>
+        <button id="nextBtn" onclick="goToThemeStep()" disabled>Next</button>
 
-  </div>
-
-  <div class="product-card" onclick="toggleProduct('invitation')" id="invitation">
-
-    <img src="icons/invitation.png" class="icon" />
-
-    <span>Invitation</span>
-
-  </div>
-
-  <div class="product-card" onclick="toggleProduct('banner')" id="banner">
-
-    <img src="icons/banner.png" class="icon" />
-
-    <span>Banner</span>
-
-  </div>
-
-  <div class="product-card" onclick="toggleProduct('thankyou')" id="thankyou">
-
-    <img src="icons/thankyou.png" class="icon" />
-
-    <span>Thank you card</span>
-
-  </div>
-</div>
-
-  <button id="nextBtn" onclick="goToThemeStep()" disabled>Next</button>
-
-  <div class="form-card">
-    <label for="photo" class="field-label">Upload your child’s photo</label>
-    <input type="file" id="photo" accept="image/*" />
-    <p class="helper-text">
-      📸 Photo tips (important):<br>
-      • Use a clear, front-facing photo<br>
-      • A square photo works best (same height and width)<br>
-      • Include head + upper body<br>
-      • Leave some space above the head<br><br>
-      Good lighting = best results ✨
-    </p>
-
-    <label for="theme" class="field-label">Choose a theme</label>
-    <select id="theme">
-      <option value="princess">Princess</option>
-      <option value="fairyland">Fairyland</option>
-      <option value="superhero">Superhero</option>
-      <option value="candyland">Candyland</option>
-      <option value="minecraft">Minecraft</option>
-      <option value="adventure">Adventure</option>
-      <option value="classic">classic</option>
-    </select>
-
-    <input id="name" type="text" placeholder="Child’s Name" />
-    <input id="date" type="date" />
-    <input id="time" type="time" />
-    <input id="location" type="text" placeholder="Party Location" />
-    <input id="rsvp" type="text" placeholder="RSVP Details" />
-
-    <button id="createBtn" class="primary-btn">
-      Create My Invitation ✨
-    </button>
-
-    <div id="cartoonPreview"></div>
-  </div>
-
-  <div id="resultModal" class="modal hidden">
-    <div class="modal-card">
-
-      <button id="closeModal" class="modal-close">&times;</button>
-
-      <h2>Your invitation is ready</h2>
-
-      <div class="modal-preview">
-        <div id="output"></div>
       </div>
-
-      <div class="modal-actions">
-        <button id="downloadInvitationBtn">Download Invitation</button>
-        <button id="downloadCartoonBtn">Download Cartoon</button>
+      <div id="step2" class="step hidden">
+        <h2>Choose a theme</h2>
+        <div class="card-grid">
+          <div class="card" data-theme="classic">CLASSIC</div>
+          <div class="card" data-theme="princess">PRINCESS</div>
+          <div class="card" data-theme="fairy">FAIRY</div>
+          <div class="card" data-theme="candy">CANDYLAND</div>
+          <div class="card" data-theme="minecraft">MINECRAFT</div>
+          <div class="card" data-theme="hero">SUPERHERO</div>
+          <div class="card" data-theme="advvemture">ADVENTURE</div>
+        </div>
+        <button id="themeNextBtn" disabled>Next</button>
       </div>
+      <div id="step3" class="step hidden">
+        <!-- occasion (you’ll add later) -->
+      </div>
+      <div id="step4" class="step hidden">
+        <!-- inputs + upload -->
+          <label for="photo" class="field-label">Upload your child’s photo</label>
+          <input type="file" id="photo" accept="image/*" />
+          <p class="helper-text">
+            📸 Photo tips (important):<br>
+            • Use a clear, front-facing photo<br>
+            • A square photo works best (same height and width)<br>
+            • Include head + upper body<br>
+            • Leave some space above the head<br><br>
+            Good lighting = best results ✨
+          </p>
 
+          <label for="theme" class="field-label">Choose a theme</label>
+
+          <input id="name" type="text" placeholder="Child’s Name" />
+          <input id="date" type="date" />
+          <input id="time" type="time" />
+          <input id="location" type="text" placeholder="Party Location" />
+          <input id="rsvp" type="text" placeholder="RSVP Details" />
+      </div>
+      <div id="step5" class="step hidden">
+        <!-- loading -->
+      </div>
+      <div id="step6" class="step hidden">
+        <!-- result -->
+      </div>
+      <div id="resultModal" class="modal hidden">
+        <div class="modal-card">
+
+          <button id="closeModal" class="modal-close">&times;</button>
+
+          <h2>Your invitation is ready</h2>
+
+          <div class="modal-preview">
+            <div id="output"></div>
+          </div>
+
+          <div class="modal-actions">
+            <button id="downloadInvitationBtn">Download Invitation</button>
+            <button id="downloadCartoonBtn">Download Cartoon</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  
+  <div id="v1-ui">
+    <div class="subtitle">Create personalized kids birthday invitations in seconds</div>
+
+    
+    <div class="form-card">
+      
+
+      <button id="createBtn" class="primary-btn">
+        Create My Invitation ✨
+      </button>
+
+      <div id="cartoonPreview"></div>
+    </div>
+
+    
   </div>
   <script src="script.js"></script>
 </html>

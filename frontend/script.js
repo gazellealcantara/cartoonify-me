@@ -15,6 +15,28 @@ function toggleProduct(product) {
 
 }
 
+function goToStep(step) {
+  document.querySelectorAll(".step").forEach(s => {
+    s.classList.add("hidden");
+  });
+  document.getElementById("step" + step).classList.remove("hidden");
+}
+
+function openModal() {
+  document.getElementById("flowModal").classList.remove("hidden");
+  goToStep(1);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const nextBtn = document.getElementById("nextBtn");
+  nextBtn.onclick = () => goToStep(2);
+  const themeNextBtn = document.getElementById("themeNextBtn");
+  if (themeNextBtn) {
+    themeNextBtn.onclick = () => goToStep(4);
+  }
+
+});
+
 function updateNextButton() {
   const btn = document.getElementById("nextBtn");
 
@@ -37,6 +59,23 @@ document.addEventListener("DOMContentLoaded", () => {
       cartoonImageUrl = "";
     });
   }
+let selectedTheme = null;
+
+document.querySelectorAll("#step2 .card").forEach(card => {
+
+  card.onclick = () => {
+    // remove previous selection
+    document.querySelectorAll("#step2 .card").forEach(c => {
+      c.classList.remove("selected");
+    });
+    // select current
+    card.classList.add("selected");
+    selectedTheme = card.dataset.theme;
+    // enable next
+    document.getElementById("themeNextBtn").disabled = false;
+  };
+});
+
 
   const createBtn = document.getElementById("createBtn");
   if (createBtn) {
@@ -512,4 +551,8 @@ window.cartoonifyPhoto = async function () {
     console.error(err);
     alert(err.message);
   }
+};
+
+window.onload = () => {
+  openModal();
 };

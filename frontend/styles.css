@@ -225,7 +225,7 @@ input {
 .modal {
     position: fixed;
     inset: 0;
-    background: rgba(55, 39, 82, 0.45);
+    /* background: rgba(55, 39, 82, 0.45); */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -233,7 +233,11 @@ input {
     z-index: 999;
 }
 
-.modal.hidden {
+.modal {
+  background: rgba(0,0,0,1); /* full black */
+}
+
+.modal.hidden, .hidden {
     display: none;
 }
 
@@ -367,5 +371,17 @@ product-card.selected::after {
   font-weight: bold;
 
   color: #7c3aed;
+
+}
+
+#v1-ui {
+  display: none;
+}
+
+.card.selected {
+
+  border: 2px solid #a855f7;
+
+  transform: scale(1.03);
 
 }
