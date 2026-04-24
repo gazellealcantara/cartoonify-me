@@ -537,3 +537,54 @@ function openModal() {
     step1.style.display = 'block';
   }
 }
+
+// =============================
+// STEP 1 → STEP 2 NAVIGATION
+// =============================
+const nextStep1 = document.getElementById('nextStep1');
+
+if (nextStep1) {
+  nextStep1.addEventListener('click', () => {
+    // hide step 1
+    const step1 = document.getElementById('step-1');
+    if (step1) step1.style.display = 'none';
+
+    // show step 2
+    const step2 = document.getElementById('step-2');
+    if (step2) step2.style.display = 'block';
+  });
+}
+
+// =============================
+// STEP 2: THEME SELECTION
+// =============================
+
+document.addEventListener("DOMContentLoaded", () => {
+  const themeOptions = document.querySelectorAll('#step-2 .option');
+  const themeNextBtn = document.getElementById('themeNextBtn');
+
+  themeOptions.forEach(option => {
+    option.addEventListener('click', () => {
+
+      // clear previous selection (single select)
+      themeOptions.forEach(o => o.classList.remove('selected'));
+
+      // select current
+      option.classList.add('selected');
+
+      const theme = option.dataset.theme;
+
+      // 🚨 guard (prevents undefined)
+      if (!theme) return;
+
+      selectedTheme = theme;
+
+      // enable next
+      if (themeNextBtn) {
+        themeNextBtn.disabled = false;
+      }
+
+      console.log("Theme:", selectedTheme);
+    });
+  });
+});
