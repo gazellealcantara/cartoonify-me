@@ -16,25 +16,37 @@ function toggleProduct(product) {
 }
 
 function goToStep(step) {
-  document.querySelectorAll(".step").forEach(s => {
-    s.classList.add("hidden");
+  const allSteps = document.querySelectorAll('.step');
+  allSteps.forEach(s => {
+    if (s) s.style.display = 'none';
   });
-  document.getElementById("step" + step).classList.remove("hidden");
+  const target = document.getElementById(`step-${step}`);
+  if (!target) {
+    console.error(`❌ step-${step} not found`);
+    return;
+  }
+  target.style.display = 'block';
 }
 
 function openModal() {
-  document.getElementById("flowModal").classList.remove("hidden");
-  goToStep(1);
+  const modal = document.getElementById('flowModal');
+  modal.classList.remove('hidden');
+  // IMPORTANT: delay step render slightly
+  setTimeout(() => {
+    goToStep(1);
+  }, 0);
+
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const nextBtn = document.getElementById("nextBtn");
-  nextBtn.onclick = () => goToStep(2);
+  const nextBtn = document.getElementById("nextStep1");
+  if (nextBtn) {
+    nextBtn.onclick = () => goToStep(2);
+  }
   const themeNextBtn = document.getElementById("themeNextBtn");
   if (themeNextBtn) {
     themeNextBtn.onclick = () => goToStep(4);
   }
-
 });
 
 function updateNextButton() {
@@ -76,6 +88,48 @@ document.querySelectorAll("#step2 .card").forEach(card => {
   };
 });
 
+let selectedProducts = [];
+const options = document.querySelectorAll('.option');
+const nextBtn = document.getElementById('nextStep1');
+options.forEach(option => {
+  option.addEventListener('click', () => {
+    const value = option.dataset.value;
+    if (option.classList.contains('selected')) {
+      // REMOVE selection
+      option.classList.remove('selected');
+      selectedProducts = selectedProducts.filter(v => v !== value);
+    } else {
+      // ADD selection
+      option.classList.add('selected');
+      selectedProducts.push(value);
+    }
+    // enable Next only if something is selected
+    nextBtn.disabled = selectedProducts.length === 0;
+    console.log(selectedProducts); // debug
+  });
+});
+
+const track = document.querySelector('.carousel-track');
+document.querySelector('.arrow.left').onclick = () => {
+  track.scrollBy({ left: -200, behavior: 'smooth' });
+};
+document.querySelector('.arrow.right').onclick = () => {
+  track.scrollBy({ left: 200, behavior: 'smooth' });
+};
+nextBtn.onclick = () => {
+  goToStep(2);
+};
+
+const themeOptions = document.querySelectorAll('#step-2 .option');
+themeOptions.forEach(option => {
+  option.addEventListener('click', () => {
+    themeOptions.forEach(o => o.classList.remove('selected'));
+    option.classList.add('selected');
+    const theme = option.dataset.theme;
+    if (!theme) return;
+    console.log(theme);
+  });
+});
 
   const createBtn = document.getElementById("createBtn");
   if (createBtn) {
