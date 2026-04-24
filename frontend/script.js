@@ -1,3 +1,5 @@
+let selectedTheme = "classic";
+let selectedProducts = [];
 let cartoonImageUrl = "";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -483,3 +485,55 @@ window.cartoonifyPhoto = async function () {
     alert(err.message);
   }
 };
+
+// =============================
+// STEP 1: PRODUCT SELECTION
+// =============================
+
+document.addEventListener("DOMContentLoaded", () => {
+  const productOptions = document.querySelectorAll('#step-1 .option');
+  const nextStep1 = document.getElementById('nextStep1');
+
+  productOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      const value = option.dataset.value;
+
+      // 🚨 guard (prevents undefined bug)
+      if (!value) return;
+
+      if (option.classList.contains('selected')) {
+        // REMOVE
+        option.classList.remove('selected');
+        selectedProducts = selectedProducts.filter(v => v !== value);
+      } else {
+        // ADD
+        option.classList.add('selected');
+        selectedProducts.push(value);
+      }
+
+      // enable Next only if at least one selected
+      if (nextStep1) {
+        nextStep1.disabled = selectedProducts.length === 0;
+      }
+
+      console.log("Products:", selectedProducts);
+    });
+  });
+});
+
+// =============================
+// MODAL OPEN (FIX)
+// =============================
+function openModal() {
+  const modal = document.getElementById('flowModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+  }
+
+  // optional: show step 1 if you're using steps
+  const step1 = document.getElementById('step-1');
+  if (step1) {
+    document.querySelectorAll('.step').forEach(s => s.style.display = 'none');
+    step1.style.display = 'block';
+  }
+}
