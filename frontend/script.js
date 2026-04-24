@@ -1,68 +1,4 @@
-let selectedProducts = [];
 let cartoonImageUrl = "";
-
-function toggleProduct(product) {
-  const el = document.getElementById(product);
-
-  if (selectedProducts.includes(product)) {
-    selectedProducts = selectedProducts.filter(p => p !== product);
-    el.classList.remove("selected");
-  } else {
-    selectedProducts.push(product);
-    el.classList.add("selected");
-  }
-  updateNextButton();
-
-}
-
-function goToStep(step) {
-  const allSteps = document.querySelectorAll('.step');
-  allSteps.forEach(s => {
-    if (s) s.style.display = 'none';
-  });
-  const target = document.getElementById(`step-${step}`);
-  if (!target) {
-    console.error(`❌ step-${step} not found`);
-    return;
-  }
-  target.style.display = 'block';
-}
-
-function openModal() {
-  const modal = document.getElementById('flowModal');
-  modal.classList.remove('hidden');
-  // IMPORTANT: delay step render slightly
-  setTimeout(() => {
-    goToStep(1);
-  }, 0);
-
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const nextBtn = document.getElementById("nextStep1");
-  if (nextBtn) {
-    nextBtn.onclick = () => goToStep(2);
-  }
-  const themeNextBtn = document.getElementById("themeNextBtn");
-  if (themeNextBtn) {
-    themeNextBtn.onclick = () => goToStep(4);
-  }
-});
-
-function updateNextButton() {
-  const btn = document.getElementById("nextBtn");
-
-  if (selectedProducts.length > 0) {
-    btn.disabled = false;
-  } else {
-    btn.disabled = true;
-  }
-}
-
-function goToThemeStep() {
-  document.getElementById("productStep").style.display = "none";
-  document.getElementById("themeStep").style.display = "block";
-}
 
 document.addEventListener("DOMContentLoaded", () => {
   const photoInput = document.getElementById("photo");
@@ -71,65 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
       cartoonImageUrl = "";
     });
   }
-let selectedTheme = null;
-
-document.querySelectorAll("#step2 .card").forEach(card => {
-
-  card.onclick = () => {
-    // remove previous selection
-    document.querySelectorAll("#step2 .card").forEach(c => {
-      c.classList.remove("selected");
-    });
-    // select current
-    card.classList.add("selected");
-    selectedTheme = card.dataset.theme;
-    // enable next
-    document.getElementById("themeNextBtn").disabled = false;
-  };
-});
-
-let selectedProducts = [];
-const options = document.querySelectorAll('.option');
-const nextBtn = document.getElementById('nextStep1');
-options.forEach(option => {
-  option.addEventListener('click', () => {
-    const value = option.dataset.value;
-    if (option.classList.contains('selected')) {
-      // REMOVE selection
-      option.classList.remove('selected');
-      selectedProducts = selectedProducts.filter(v => v !== value);
-    } else {
-      // ADD selection
-      option.classList.add('selected');
-      selectedProducts.push(value);
-    }
-    // enable Next only if something is selected
-    nextBtn.disabled = selectedProducts.length === 0;
-    console.log(selectedProducts); // debug
-  });
-});
-
-const track = document.querySelector('.carousel-track');
-document.querySelector('.arrow.left').onclick = () => {
-  track.scrollBy({ left: -200, behavior: 'smooth' });
-};
-document.querySelector('.arrow.right').onclick = () => {
-  track.scrollBy({ left: 200, behavior: 'smooth' });
-};
-nextBtn.onclick = () => {
-  goToStep(2);
-};
-
-const themeOptions = document.querySelectorAll('#step-2 .option');
-themeOptions.forEach(option => {
-  option.addEventListener('click', () => {
-    themeOptions.forEach(o => o.classList.remove('selected'));
-    option.classList.add('selected');
-    const theme = option.dataset.theme;
-    if (!theme) return;
-    console.log(theme);
-  });
-});
 
   const createBtn = document.getElementById("createBtn");
   if (createBtn) {
@@ -605,8 +482,4 @@ window.cartoonifyPhoto = async function () {
     console.error(err);
     alert(err.message);
   }
-};
-
-window.onload = () => {
-  openModal();
 };
