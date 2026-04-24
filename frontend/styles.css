@@ -225,7 +225,7 @@ input {
 .modal {
     position: fixed;
     inset: 0;
-    /* background: rgba(55, 39, 82, 0.45); */
+    background: rgba(55, 39, 82, 0.45);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -235,6 +235,12 @@ input {
 
 .modal.hidden, .hidden {
     display: none;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 900px;
+  overflow: visible; /* 🔥 allow children to scroll */
 }
 
 .modal-card {
@@ -369,10 +375,7 @@ product-card.selected::after {
   display: none;
 }
 
-.card.selected {
-  border: 2px solid #a855f7;
-  transform: scale(1.03);
-}
+/* ===== OPTIONS / CARDS ===== */
 
 .options {
   display: flex;
@@ -385,41 +388,62 @@ product-card.selected::after {
   height: 150px;
   background: #eee;
   border-radius: 20px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   cursor: pointer;
   transition: 0.2s;
   border: 2px solid transparent;
 }
 
-.option.selected {
+.option.selected,
+.card.selected {
   background: #d8c6f0;
   border: 2px solid #a855f7;
   transform: scale(1.05);
   box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
 }
 
-.carousel {
+/* ===== STEP 2 THEME CAROUSEL ===== */
+
+#step-2 {
+  width: 100%;
+}
+
+#step-2 .carousel {
   display: flex;
   align-items: center;
-  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
-.carousel-track {
+#step-2 .card-grid.options {
+  flex: 1;
   display: flex;
-  overflow-x: auto;
-  scroll-behavior: smooth;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+
   gap: 16px;
-  width: 600px; /* controls visible cards */
+  padding: 10px 16px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
 
-.carousel-track::-webkit-scrollbar {
+#step-2 .card-grid.options::-webkit-scrollbar {
   display: none;
 }
 
-.option {
-  min-width: 150px;
-  height: 150px;
-  flex-shrink: 0;
+#step-2 .option {
+  flex: 0 0 auto;
+  width: 140px;
+  scroll-snap-align: start;
 }

@@ -588,3 +588,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+const track = document.querySelector('.card-grid.options');
+
+document.querySelector('.arrow.left').addEventListener('click', () => {
+  track.scrollBy({ left: -200, behavior: 'smooth' });
+});
+
+document.querySelector('.arrow.right').addEventListener('click', () => {
+  track.scrollBy({ left: 200, behavior: 'smooth' });
+});
