@@ -143,7 +143,7 @@ linear-gradient(to bottom,
     subtitleColor: "#6b7280",
     nameColor: "#111827",
     footerColor: "#6b7280",
-    overlay: "none",
+    overlay: "linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.06))",
     detailsBg: "rgba(255,255,255,0.95)",
     detailsText: "#374151",
     textShadow: "none"
@@ -244,6 +244,12 @@ function generateInvitation() {
     bgImage = URL.createObjectURL(file);
   }
 
+  const hasOverlay = bgImage && config.overlay && config.overlay !== "none";
+  const cardBackground = bgImage
+    ? (hasOverlay ? `${config.overlay}, url('${bgImage}')` : `url('${bgImage}')`)
+    : (config.backgroundStyle || config.overlay || "none");
+  const backgroundBlendMode = hasOverlay ? "multiply" : "normal";
+
   const cardStyle = `
     position: relative;
     width: 100%;
@@ -253,11 +259,11 @@ function generateInvitation() {
     overflow: hidden;
     border-radius: 32px;
 
-    background-image: ${bgImage ? `${config.overlay}, url('${bgImage}')` : config.overlay};
+    background: ${cardBackground};
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    background-blend-mode: multiply;
+    background-blend-mode: ${backgroundBlendMode};
 
     box-shadow: 0 18px 50px rgba(0,0,0,0.12);
     padding: 72px 28px 160px;
