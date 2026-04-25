@@ -194,7 +194,7 @@ function downloadCartoon() {
 }
 
 function generateInvitation() {
-  const theme = document.getElementById("theme").value;
+  const theme = selectedTheme || "classic";
   const config = THEMES[theme] || THEMES.princess;
 
   // console.log("theme:", theme);
@@ -437,7 +437,7 @@ window.cartoonifyPhoto = async function () {
   }
 
   const file = photoInput.files[0];
-  const theme = document.getElementById("theme").value;
+  const theme = selectedTheme || "classic";
 
   const formData = new FormData();
   formData.append("photo", file);
@@ -593,6 +593,28 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Theme:", selectedTheme);
     });
   });
+
+  themeNextBtn.addEventListener('click', () => {
+    const step2 = document.getElementById('step-2');
+    const step3 = document.getElementById('step-3');
+    const step4 = document.getElementById('step-4');
+
+    if (!selectedTheme) {
+      alert("Please choose a theme first");
+      return;
+    }
+
+    // hide step 2
+    if (step2) step2.style.display = 'none';
+
+    if (selectedTheme === "classic") {
+      // go to story step
+      if (step3) step3.style.display = 'block';
+    } else {
+      // skip to inputs
+      if (step4) step4.style.display = 'block';
+    }
+  });
 });
 
 const track = document.querySelector('.card-grid.options');
@@ -603,4 +625,20 @@ document.querySelector('.arrow.left').addEventListener('click', () => {
 
 document.querySelector('.arrow.right').addEventListener('click', () => {
   track.scrollBy({ left: 200, behavior: 'smooth' });
+});
+// =============================
+// STEP 3 → STEP 4 NAVIGATION
+// =============================
+document.addEventListener("DOMContentLoaded", () => {
+  const storyNextBtn = document.getElementById('storyNextBtn');
+
+  if (storyNextBtn) {
+    storyNextBtn.addEventListener('click', () => {
+      const step3 = document.getElementById('step-3');
+      const step4 = document.getElementById('step-4');
+
+      if (step3) step3.style.display = 'none';
+      if (step4) step4.style.display = 'block';
+    });
+  }
 });
