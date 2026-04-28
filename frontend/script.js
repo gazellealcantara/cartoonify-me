@@ -504,23 +504,20 @@ document.addEventListener("DOMContentLoaded", () => {
   productOptions.forEach(option => {
     option.addEventListener('click', () => {
       const value = option.dataset.value;
-
-      // 🚨 guard (prevents undefined bug)
       if (!value) return;
 
-      if (option.classList.contains('selected')) {
-        // REMOVE
-        option.classList.remove('selected');
-        selectedProducts = selectedProducts.filter(v => v !== value);
-      } else {
-        // ADD
-        option.classList.add('selected');
-        selectedProducts.push(value);
-      }
+      // clear all selections
+      productOptions.forEach(o => o.classList.remove('selected'));
+      selectedProducts = [];
 
-      // enable Next only if at least one selected
+      // select only one
+      option.classList.add('selected');
+      selectedProducts.push(value);
+
+      updateFormByProduct();
+
       if (nextStep1) {
-        nextStep1.disabled = selectedProducts.length === 0;
+        nextStep1.disabled = false;
       }
 
       console.log("Products:", selectedProducts);
@@ -564,6 +561,22 @@ if (nextStep1) {
   });
 }
 
+function updateFormByProduct() {
+  const isInvitation = selectedProducts.includes("invitation");
+  const isPortrait = selectedProducts.includes("portrait");
+
+  const invitationFields = document.getElementById("invitationFields");
+  const portraitFields = document.getElementById("portraitFields");
+
+  if (invitationFields) {
+    invitationFields.style.display = isInvitation ? "block" : "none";
+  }
+
+  if (portraitFields) {
+    portraitFields.style.display = isPortrait ? "block" : "none";
+  }
+}
+
 // =============================
 // STEP 2: THEME SELECTION
 // =============================
@@ -599,7 +612,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   themeNextBtn.addEventListener('click', () => {
     const step2 = document.getElementById('step-2');
-    const step3 = document.getElementById('step-3');
     const step4 = document.getElementById('step-4');
 
     if (!selectedTheme) {
@@ -610,13 +622,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // hide step 2
     if (step2) step2.style.display = 'none';
 
-    if (selectedTheme === "classic") {
-      // go to story step
-      if (step3) step3.style.display = 'block';
-    } else {
-      // skip to inputs
-      if (step4) step4.style.display = 'block';
-    }
+    // ALWAYS go to form
+    if (step4) step4.style.display = 'block';
+
+    updateFormByProduct();
   });
 });
 

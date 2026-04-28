@@ -45,38 +45,28 @@
         </div>
         <button id="themeNextBtn" disabled>Next</button>
       </div>
-      <div id="step-3" class="step" style="display:none;">
-        <h2>What kind of story?</h2>
-
-        <div class="options">
-          <div class="option" data-story="first">First Meeting ❤️</div>
-          <div class="option" data-story="anniversary">Anniversary ✨</div>
-          <div class="option" data-story="memory">A Memory 💭</div>
-          <div class="option" data-story="just">Just Because 🌿</div>
-        </div>
-
-        <button id="storyNextBtn">Next</button>
-      </div>
       <div id="step-4" class="step">
         <!-- inputs + upload -->
-          <label for="photo" class="field-label">Upload your child’s photo</label>
-          <input type="file" id="photo" accept="image/*" />
-          <p class="helper-text">
-            📸 Photo tips (important):<br>
-            • Use a clear, front-facing photo<br>
-            • A square photo works best (same height and width)<br>
-            • Include head + upper body<br>
-            • Leave some space above the head<br><br>
-            Good lighting = best results ✨
-          </p>
-
-          <label for="theme" class="field-label">Choose a theme</label>
-
-          <input id="name" type="text" placeholder="Child’s Name" />
-          <input id="date" type="date" />
-          <input id="time" type="time" />
-          <input id="location" type="text" placeholder="Party Location" />
-          <input id="rsvp" type="text" placeholder="RSVP Details" />
+          <!-- ALWAYS visible -->
+          <div id="commonFields">
+            <input id="name" placeholder="Child’s Name" />
+          </div>
+          <!-- ONLY for invitation -->
+          <div id="invitationFields">
+            <input id="date" type="date" />
+            <input id="time" type="time" />
+            <input id="location" placeholder="Party Location" />
+            <input id="rsvp" placeholder="RSVP Details" />
+          </div>
+          <!-- ONLY for portrait -->
+          <div id="portraitFields" style="display: none;">
+            <input 
+              id="message" 
+              type="text" 
+              placeholder="e.g. You are my sunshine 💛" 
+              maxlength="120"
+            />
+          </div>
       </div>
       <div id="step-5" class="step">
         <!-- loading -->
