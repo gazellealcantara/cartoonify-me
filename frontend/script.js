@@ -1,3 +1,4 @@
+console.log("🔥 NEW SCRIPT LOADED");
 let selectedTheme = "classic";
 let selectedProducts = [];
 let cartoonImageUrl = "";
@@ -157,12 +158,12 @@ function generateFileName(prefix, theme) {
   return `${randomString}-${theme}-${prefix}.png`;
 }
 
-function openResultModal() {
+/*function openResultModal() {
   const modal = document.getElementById("resultModal");
   if (modal) {
     modal.classList.remove("hidden");
   }
-}
+}*/
 
 function closeResultModal() {
   const modal = document.getElementById("resultModal");
@@ -405,7 +406,7 @@ function generateInvitation() {
     outputEl.innerHTML = output;
   }
 
-  openResultModal();
+  //openResultModal();
 }
 
 function downloadInvitation() {
@@ -544,6 +545,8 @@ function openModal() {
   }
 }
 
+window.openModal = openModal;
+
 // =============================
 // STEP 1 → STEP 2 NAVIGATION
 // =============================
@@ -617,14 +620,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-const track = document.querySelector('.card-grid.options');
+document.addEventListener("DOMContentLoaded", () => {
+  const track = document.querySelector('.card-grid.options');
+  const leftArrow = document.querySelector('.arrow.left');
+  const rightArrow = document.querySelector('.arrow.right');
 
-document.querySelector('.arrow.left').addEventListener('click', () => {
-  track.scrollBy({ left: -200, behavior: 'smooth' });
-});
+  if (track && leftArrow && rightArrow) {
+    leftArrow.addEventListener('click', () => {
+      track.scrollBy({ left: -200, behavior: 'smooth' });
+    });
 
-document.querySelector('.arrow.right').addEventListener('click', () => {
-  track.scrollBy({ left: 200, behavior: 'smooth' });
+    rightArrow.addEventListener('click', () => {
+      track.scrollBy({ left: 200, behavior: 'smooth' });
+    });
+  }
 });
 // =============================
 // STEP 3 → STEP 4 NAVIGATION

@@ -234,7 +234,7 @@ input {
 }
 
 .modal.hidden, .hidden {
-    display: none;
+    display: none !important;
 }
 
 .modal-content {
