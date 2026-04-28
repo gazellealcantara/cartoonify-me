@@ -49,14 +49,29 @@
         <!-- inputs + upload -->
           <!-- ALWAYS visible -->
           <div id="commonFields">
-            <input id="name" placeholder="Child’s Name" />
+            <div class="form-row">
+              <input id="name" placeholder="Child’s Name" />
+            </div>
           </div>
           <!-- ONLY for invitation -->
-          <div id="invitationFields">
-            <input id="date" type="date" />
-            <input id="time" type="time" />
-            <input id="location" placeholder="Party Location" />
-            <input id="rsvp" placeholder="RSVP Details" />
+          <div id="invitationFields" class="form-section">
+
+            <div class="form-row">
+              <input id="age" placeholder="Turning __ years old (optional)" />
+            </div>
+            <div class="form-row">
+              <input id="date" type="date" />
+              <input id="time" type="time" />
+            </div>
+
+            <div class="form-row">
+              <input id="location" placeholder="Party Location" />
+            </div>
+
+            <div class="form-row">
+              <input id="rsvp" placeholder="RSVP Contact" />
+            </div>
+
           </div>
           <!-- ONLY for portrait -->
           <div id="portraitFields" style="display: none;">

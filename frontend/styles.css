@@ -45,7 +45,7 @@ input[type="file"] {
     color: #4f3b78;
 }
 
-input[type="text"],
+/* input[type="text"],
 input[type="date"],
 input[type="time"],
 select {
@@ -59,7 +59,7 @@ select {
     color: #4f3b78;
     background: white;
     box-sizing: border-box;
-}
+} */
 
 select {
     display: block;
@@ -446,4 +446,110 @@ product-card.selected::after {
   flex: 0 0 auto;
   width: 140px;
   scroll-snap-align: start;
+}
+
+/* FORM LAYOUT */
+
+#step-4 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+#commonFields {
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 20px;
+}
+
+.form-section {
+  width: 100%;
+  max-width: 700px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+/* INPUT STYLE */
+
+input {
+  flex: 1;
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 2px solid #e9d5ff;
+  font-size: 16px;
+  background: #ffffff;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+input::placeholder {
+  color: #a78bfa;
+}
+
+input:focus {
+  outline: none;
+  border-color: #c084fc;
+  box-shadow: 0 0 0 3px rgba(192,132,252,0.2);
+}
+
+/* DATE + TIME SAME HEIGHT */
+
+input[type="date"],
+input[type="time"] {
+  height: 56px;
+}
+
+/* SMALL INPUT FIX (your issue right now) */
+
+#commonFields input {
+  width: 100%;
+}
+
+/* CENTER THE WHOLE FORM BLOCK */
+
+.form-section {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* TIGHTEN VERTICAL SPACING */
+
+.form-row {
+  margin-bottom: 14px;
+}
+
+/* ADD SPACE BETWEEN NAME AND REST */
+
+#commonFields {
+  margin-bottom: 24px;
+}
+
+/* OPTIONAL: soften input background (more premium) */
+
+input {
+  background: rgba(255,255,255,0.95);
+}
+
+/* OPTIONAL: hover feedback */
+
+input:hover {
+  border-color: #d8b4fe;
+}
+
+#commonFields {
+  width: 100%;
+  max-width: 700px;  /* match .form-section */
+  margin: 0 auto;
+}
+
+#commonFields input {
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
 }
