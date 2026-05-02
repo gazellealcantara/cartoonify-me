@@ -55,7 +55,7 @@
             <!-- ALWAYS -->
             <div id="commonFields">
               <div class="form-row">
-                <input id="name" placeholder="Child’s Name" />
+                <input id="childName" placeholder="Child’s Name" />
               </div>
             </div>
 
@@ -63,12 +63,16 @@
             <div id="invitationFields">
 
               <div class="form-row">
-                <input id="age" placeholder="Turning __ years old (optional)" />
+                <input id="photoUpload" type="file" accept="image/*" />
               </div>
 
               <div class="form-row">
-                <input id="date" type="date" />
-                <input id="time" type="time" />
+                <input id="childAge" placeholder="Turning __ years old (optional)" />
+              </div>
+
+              <div class="form-row">
+                <input id="eventDate" type="date" />
+                <input id="eventTime" type="time" />
               </div>
 
               <div class="form-row">
@@ -85,15 +89,26 @@
 
           <!-- RIGHT SIDE -->
           <div class="preview-section">
+
             <div id="invitationPreview">
+
               <div id="previewCard">
+
+                <div class="preview-photo">
+                  <img id="previewImage" />
+                </div>
+
                 <h3 id="previewName">Child’s Name</h3>
+
                 <p id="previewAge"></p>
                 <p id="previewDateTime"></p>
                 <p id="previewLocation"></p>
                 <p id="previewRsvp"></p>
+
               </div>
+
             </div>
+
           </div>
 
         </div>

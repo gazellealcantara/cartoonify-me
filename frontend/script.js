@@ -702,3 +702,70 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+const fileInput = document.getElementById("photoUpload");
+
+fileInput?.addEventListener("change", function () {
+  const file = this.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    document.getElementById("previewImage").src = e.target.result;
+  };
+
+  reader.readAsDataURL(file);
+});
+
+// ===== LIVE TEXT PREVIEW =====
+
+document.getElementById("childName").addEventListener("input", (e) => {
+  document.getElementById("previewName").textContent =
+    e.target.value || "Child’s Name";
+});
+
+document.getElementById("childAge").addEventListener("input", (e) => {
+  document.getElementById("previewAge").textContent =
+    e.target.value ? `Turning ${e.target.value}` : "";
+});
+
+function updateDateTime() {
+  const date = document.getElementById("eventDate").value;
+  const time = document.getElementById("eventTime").value;
+
+  if (!date && !time) {
+    document.getElementById("previewDateTime").textContent = "";
+    return;
+  }
+
+  document.getElementById("previewDateTime").textContent =
+    `${date || ""} ${time || ""}`;
+}
+
+document.getElementById("eventDate").addEventListener("input", updateDateTime);
+document.getElementById("eventTime").addEventListener("input", updateDateTime);
+
+document.getElementById("location").addEventListener("input", (e) => {
+  document.getElementById("previewLocation").textContent = e.target.value;
+});
+
+document.getElementById("rsvp").addEventListener("input", (e) => {
+  document.getElementById("previewRsvp").textContent = e.target.value;
+});
+
+
+// ===== PHOTO PREVIEW =====
+
+document.getElementById("photoUpload").addEventListener("change", function () {
+  const file = this.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    document.getElementById("previewImage").src = e.target.result;
+  };
+
+  reader.readAsDataURL(file);
+});
