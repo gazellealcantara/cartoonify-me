@@ -551,12 +551,10 @@ const nextStep1 = document.getElementById('nextStep1');
 
 if (nextStep1) {
   nextStep1.addEventListener('click', () => {
-    // hide step 1
     const step1 = document.getElementById('step-1');
-    if (step1) step1.style.display = 'none';
-
-    // show step 2
     const step2 = document.getElementById('step-2');
+
+    if (step1) step1.style.display = 'none';
     if (step2) step2.style.display = 'block';
   });
 }
@@ -659,4 +657,48 @@ document.addEventListener("DOMContentLoaded", () => {
       if (step4) step4.style.display = 'block';
     });
   }
+});
+
+// ===== LIVE PREVIEW =====
+
+function updatePreview() {
+  const name = document.getElementById("childName")?.value || "Child’s Name";
+  const age = document.getElementById("childAge")?.value || "";
+  const date = document.getElementById("eventDate")?.value || "";
+  const time = document.getElementById("eventTime")?.value || "";
+  const location = document.getElementById("location")?.value || "";
+  const rsvp = document.getElementById("rsvp")?.value || "";
+
+  document.getElementById("previewName").innerText = name;
+
+  document.getElementById("previewAge").innerText =
+    age ? `Turning ${age}` : "";
+
+  document.getElementById("previewDateTime").innerText =
+    date || time ? `${date} ${time}` : "";
+
+  document.getElementById("previewLocation").innerText = location;
+
+  document.getElementById("previewRsvp").innerText =
+    rsvp ? `RSVP: ${rsvp}` : "";
+}
+
+// attach listeners
+
+document.addEventListener("DOMContentLoaded", () => {
+  const inputs = [
+    "childName",
+    "childAge",
+    "eventDate",
+    "eventTime",
+    "location",
+    "rsvp"
+  ];
+
+  inputs.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener("input", updatePreview);
+    }
+  });
 });

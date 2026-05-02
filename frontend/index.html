@@ -39,49 +39,65 @@
             <div class="option" data-theme="candyland">Candyland</div>
             <div class="option" data-theme="minecraft">Minecraft</div>
             <div class="option" data-theme="hero">SUPERHERO</div>
-            <div class="option" data-theme="advvemture">ADVENTURE</div>
+            <div class="option" data-theme="adventure">ADVENTURE</div>
           </div>
           <button class="arrow right">›</button>
         </div>
         <button id="themeNextBtn" disabled>Next</button>
       </div>
       <div id="step-4" class="step">
-        <!-- inputs + upload -->
-          <!-- ALWAYS visible -->
-          <div id="commonFields">
-            <div class="form-row">
-              <input id="name" placeholder="Child’s Name" />
+
+        <div class="step-4-layout">
+
+          <!-- LEFT SIDE -->
+          <div class="form-section">
+
+            <!-- ALWAYS -->
+            <div id="commonFields">
+              <div class="form-row">
+                <input id="name" placeholder="Child’s Name" />
+              </div>
+            </div>
+
+            <!-- INVITATION -->
+            <div id="invitationFields">
+
+              <div class="form-row">
+                <input id="age" placeholder="Turning __ years old (optional)" />
+              </div>
+
+              <div class="form-row">
+                <input id="date" type="date" />
+                <input id="time" type="time" />
+              </div>
+
+              <div class="form-row">
+                <input id="location" placeholder="Party Location" />
+              </div>
+
+              <div class="form-row">
+                <input id="rsvp" placeholder="RSVP Contact" />
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- RIGHT SIDE -->
+          <div class="preview-section">
+            <div id="invitationPreview">
+              <div id="previewCard">
+                <h3 id="previewName">Child’s Name</h3>
+                <p id="previewAge"></p>
+                <p id="previewDateTime"></p>
+                <p id="previewLocation"></p>
+                <p id="previewRsvp"></p>
+              </div>
             </div>
           </div>
-          <!-- ONLY for invitation -->
-          <div id="invitationFields" class="form-section">
 
-            <div class="form-row">
-              <input id="age" placeholder="Turning __ years old (optional)" />
-            </div>
-            <div class="form-row">
-              <input id="date" type="date" />
-              <input id="time" type="time" />
-            </div>
+        </div>
 
-            <div class="form-row">
-              <input id="location" placeholder="Party Location" />
-            </div>
-
-            <div class="form-row">
-              <input id="rsvp" placeholder="RSVP Contact" />
-            </div>
-
-          </div>
-          <!-- ONLY for portrait -->
-          <div id="portraitFields" style="display: none;">
-            <input 
-              id="message" 
-              type="text" 
-              placeholder="e.g. You are my sunshine 💛" 
-              maxlength="120"
-            />
-          </div>
       </div>
       <div id="step-5" class="step">
         <!-- loading -->
