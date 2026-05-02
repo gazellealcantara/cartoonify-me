@@ -598,6 +598,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!theme) return;
 
       selectedTheme = theme;
+      applyThemeToPreview(theme);
 
       // enable next
       if (themeNextBtn) {
@@ -662,25 +663,45 @@ document.addEventListener("DOMContentLoaded", () => {
 // ===== LIVE PREVIEW =====
 
 function updatePreview() {
-  const name = document.getElementById("childName")?.value || "Child’s Name";
-  const age = document.getElementById("childAge")?.value || "";
-  const date = document.getElementById("eventDate")?.value || "";
-  const time = document.getElementById("eventTime")?.value || "";
-  const location = document.getElementById("location")?.value || "";
-  const rsvp = document.getElementById("rsvp")?.value || "";
+  const nameValue = document.getElementById("childName").value;
+  const ageValue = document.getElementById("childAge")?.value || "";
 
-  document.getElementById("previewName").innerText = name;
+  const dateValue = document.getElementById("eventDate")?.value || "";
+  const timeValue = document.getElementById("eventTime")?.value || "";
+  const locationValue = document.getElementById("location")?.value || "";
+  const rsvpValue = document.getElementById("rsvp")?.value || "";
 
-  document.getElementById("previewAge").innerText =
-    age ? `Turning ${age}` : "";
+  // NAME
+  previewName.textContent = nameValue || "Child’s Name";
 
-  document.getElementById("previewDateTime").innerText =
-    date || time ? `${date} ${time}` : "";
+  // AGE
+  previewAge.textContent = ageValue ? `Turning ${ageValue}` : "";
 
-  document.getElementById("previewLocation").innerText = location;
+  // DATE + TIME (formatted)
+  if (dateValue && timeValue) {
+    const dateObj = new Date(`${dateValue}T${timeValue}`);
 
-  document.getElementById("previewRsvp").innerText =
-    rsvp ? `RSVP: ${rsvp}` : "";
+    const formattedDate = dateObj.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    });
+
+    const formattedTime = dateObj.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit"
+    });
+
+    previewDateTime.textContent = `${formattedDate} • ${formattedTime}`;
+  } else {
+    previewDateTime.textContent = "";
+  }
+
+  // LOCATION
+  previewLocation.textContent = locationValue || "";
+
+  // RSVP
+  previewRsvp.textContent = rsvpValue ? `RSVP: ${rsvpValue}` : "";
 }
 
 // attach listeners
@@ -769,3 +790,34 @@ document.getElementById("photoUpload").addEventListener("change", function () {
 
   reader.readAsDataURL(file);
 });
+
+function applyThemeToPreview(theme) {
+  const config = THEMES[theme];
+  if (!config) return;
+
+  const card = document.getElementById("previewCard");
+  const img = document.getElementById("previewImage");
+
+  if (!card) return;
+
+  // 🔥 GET IMAGE SRC
+  const imageSrc = img?.src;
+
+  // 🔥 BACKGROUND IMAGE + OVERLAY
+  if (imageSrc && imageSrc !== "") {
+    card.style.background = `url('${imageSrc}')`;
+    card.style.backgroundSize = "cover";
+    card.style.backgroundPosition = "center";
+  }
+
+  // 🔥 TEXT COLORS (important now)
+  document.getElementById("previewName").style.color = "#fff";
+  document.getElementById("previewName").style.fontWeight = "700";
+  document.getElementById("previewAge").style.color = config.subtitleColor || "#eee";
+  document.getElementById("previewDateTime").style.color = config.subtitleColor || "#eee";
+  document.getElementById("previewLocation").style.color = config.subtitleColor || "#eee";
+  document.getElementById("previewRsvp").style.color = config.subtitleColor || "#eee";
+
+  // 🔥 TEXT SHADOW (makes it readable on photo)
+  card.style.textShadow = config.textShadow || "0 2px 8px rgba(0,0,0,0.6)";
+}
