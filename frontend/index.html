@@ -35,7 +35,7 @@
           <div class="card-grid options">
             <div class="option" data-theme="classic">Classic</div>
             <div class="option" data-theme="princess">Princess</div>
-            <div class="option" data-theme="fairy">Fairy</div>
+            <div class="option" data-theme="fairyland">Fairy</div>
             <div class="option" data-theme="candyland">Candyland</div>
             <div class="option" data-theme="minecraft">Minecraft</div>
             <div class="option" data-theme="hero">SUPERHERO</div>
@@ -57,14 +57,20 @@
               <div class="form-row">
                 <input id="childName" placeholder="Child’s Name" />
               </div>
-            </div>
-
-            <!-- INVITATION -->
-            <div id="invitationFields">
 
               <div class="form-row">
                 <input id="photoUpload" type="file" accept="image/*" />
               </div>
+            </div>
+
+            <div id="portraitFields" style="display: none;">
+              <div class="form-row">
+                <input id="message" placeholder="Write a short message (optional)" />
+              </div>
+            </div>
+
+            <!-- INVITATION -->
+            <div id="invitationFields">
 
               <div class="form-row">
                 <input id="childAge" placeholder="Turning __ years old (optional)" />
@@ -104,6 +110,7 @@
                 <p id="previewDateTime"></p>
                 <p id="previewLocation"></p>
                 <p id="previewRsvp"></p>
+                <p id="previewMessage"></p>
 
               </div>
 

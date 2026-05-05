@@ -1,5 +1,7 @@
 console.log("🔥 NEW SCRIPT LOADED");
 let selectedTheme = "classic";
+let product = "invitation";
+let imageSrc = "";
 let selectedProducts = [];
 let cartoonImageUrl = "";
 
@@ -514,6 +516,11 @@ document.addEventListener("DOMContentLoaded", () => {
       option.classList.add('selected');
       selectedProducts.push(value);
 
+      product = value;
+
+      // 🔥 ADD THIS
+      updatePreview();
+
       updateFormByProduct();
 
       if (nextStep1) {
@@ -523,6 +530,33 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Products:", selectedProducts);
     });
   });
+  
+
+  const photoUpload = document.getElementById("photoUpload");
+
+  if (photoUpload) {
+    photoUpload.addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+
+      reader.onload = function (event) {
+        imageSrc = event.target.result;
+
+        // optional: keep circle preview (fallback)
+        const previewImage = document.getElementById("previewImage");
+        if (previewImage) {
+          previewImage.src = imageSrc;
+        }
+
+        // 🔥 THIS updates the card background
+        updatePreview();
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
 });
 
 // =============================
@@ -560,18 +594,15 @@ if (nextStep1) {
 }
 
 function updateFormByProduct() {
-  const isInvitation = selectedProducts.includes("invitation");
-  const isPortrait = selectedProducts.includes("portrait");
-
   const invitationFields = document.getElementById("invitationFields");
   const portraitFields = document.getElementById("portraitFields");
 
   if (invitationFields) {
-    invitationFields.style.display = isInvitation ? "block" : "none";
+    invitationFields.style.display = product === "invitation" ? "block" : "none";
   }
 
   if (portraitFields) {
-    portraitFields.style.display = isPortrait ? "block" : "none";
+    portraitFields.style.display = product === "portrait" ? "block" : "none";
   }
 }
 
@@ -663,13 +694,24 @@ document.addEventListener("DOMContentLoaded", () => {
 // ===== LIVE PREVIEW =====
 
 function updatePreview() {
-  const nameValue = document.getElementById("childName").value;
-  const ageValue = document.getElementById("childAge")?.value || "";
 
+  // 👇 ADD THIS HERE (top of function)
+  previewCard.classList.remove("portrait", "invitation");
+
+  if (product === "portrait") {
+    previewCard.classList.add("portrait");
+  } else {
+    previewCard.classList.add("invitation");
+  }
+
+  // --- existing logic below ---
+  const nameValue = document.getElementById("childName")?.value || "";
+  const ageValue = document.getElementById("childAge")?.value || "";
   const dateValue = document.getElementById("eventDate")?.value || "";
   const timeValue = document.getElementById("eventTime")?.value || "";
   const locationValue = document.getElementById("location")?.value || "";
   const rsvpValue = document.getElementById("rsvp")?.value || "";
+  const messageValue = document.getElementById("message")?.value || "";
 
   // NAME
   previewName.textContent = nameValue || "Child’s Name";
@@ -677,17 +719,17 @@ function updatePreview() {
   // AGE
   previewAge.textContent = ageValue ? `Turning ${ageValue}` : "";
 
-  // DATE + TIME (formatted)
+  // DATE + TIME
   if (dateValue && timeValue) {
-    const dateObj = new Date(`${dateValue}T${timeValue}`);
+    const date = new Date(`${dateValue}T${timeValue}`);
 
-    const formattedDate = dateObj.toLocaleDateString("en-US", {
+    const formattedDate = date.toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
       year: "numeric"
     });
 
-    const formattedTime = dateObj.toLocaleTimeString("en-US", {
+    const formattedTime = date.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "2-digit"
     });
@@ -702,6 +744,8 @@ function updatePreview() {
 
   // RSVP
   previewRsvp.textContent = rsvpValue ? `RSVP: ${rsvpValue}` : "";
+
+  previewMessage.textContent = messageValue;
 }
 
 // attach listeners
@@ -713,7 +757,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "eventDate",
     "eventTime",
     "location",
-    "rsvp"
+    "rsvp",
+    "message"
   ];
 
   inputs.forEach(id => {
